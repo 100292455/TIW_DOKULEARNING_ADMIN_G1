@@ -137,9 +137,18 @@
 							</form>
 					   	</div>
 					</div>
-					
+				<form action="Administracion" method="post">
+					<div style="float: left; width: 33.5%; margin-top: 14px; margin-bottom: 14px;">
+						<input type="hidden" name="filtro" value="IrMenu">
+						<button type="submit">
+							<div id="menu" class="BotonBaseDoku" style="float: left; margin-left: 6%; top: 0px; border: 4px double red !important">
+							Volver al Menu
+							</div>
+						</button>
+					</div>
+				</form>
 				</div>
-
+				
 			</section>
 
 	
