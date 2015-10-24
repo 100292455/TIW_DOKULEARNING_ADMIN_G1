@@ -6,14 +6,15 @@
 	<head>
 
 
-		<!-- Información sobre el documento -->
+		<!-- Informacion sobre el documento -->
 	
-		<title>Practica TIW: Gestion de cursos</title>
+		<title>Practica TIW: Gestion de Promociones</title>
 		<meta charset="UTF-8">
 		<meta name="keywords" content="e-learning, cursos">
 		<meta name="description" content="Web de cursos en linea">
-		<meta name="author" content="Miguel Solera Martin">
-		<link href="<c:url value="/style/empresa-mis-ofertas.css" />" rel="stylesheet" type="text/css" >
+		<meta name="author" content="Jorge Garcia">
+		<link href="<c:url value="/admin_css/base.css" />" rel="stylesheet" type="text/css" >
+		<link href="<c:url value="/admin_css/empresa-mis-ofertas.css" />" rel="stylesheet" type="text/css" >
 		<link href="<c:url value="http://fonts.googleapis.com/css?family=Ubuntu" />" rel='stylesheet' type='text/css'>
 		<link href="<c:url value="/script/jquery-ui-1.11.2.custom/jquery-ui.css" />" rel="stylesheet">
 		<script src="<c:url value="/script/jquery-ui-1.11.2.custom/external/jquery/jquery.js" />"></script>
@@ -23,10 +24,6 @@
 		</style>
 	</head>
 	
-			<!-- ******************** TO-DO ******************** -->
-			<!-- RESCATAR ID DEL PROFESOR CORRESPONDIENTE Y PASARLO EN EL POST A AltaCursosServlet y BajaCursosServlet -->
-			<!-- *********************************************** -->
-	
 	<body>
 		
 	
@@ -34,36 +31,7 @@
 			
 			<header>
 			
-				<div id = "cabecera-logo">
-				
-					<a href="index-empresa.jsp">	
-					
-						<img class = "cabecera" src="images/logo.png" alt="Error en la imagen">    
-				
-						<h1 class = "cabecera">DOKULEARNING</h1>
-				
-					</a>
-			
-				</div>
-				
-				<nav>
-					<ul>
-						<li id = "menu-empresa"><a href = "mi-empresa.jsp">MI PERFIL</a></li>
-						<li id = "menu-ofertas"><a href = "#">MIS CURSOS</a></li>
-					</ul>	
-				</nav>
-			
-				<div id = "cabecera-sesion">
-			
-					<img class = "cabecera-sesion" src="images/index/microsoft.jpg" alt="Error en la imagen"> 
-				
-					<div id = "cabecera-sesion-men">
-						<p class = "cabecera-sesion">Microsoft Inc.</p>
-						<a href = "index.jsp">Cerrar sesión</a>
-							
-					</div>
-					
-				</div>
+				<div class="AreaPersonal" style="color:white;">Administrar Promociones</div>
 			
 			</header>
 			
@@ -74,7 +42,7 @@
 				
 				<div id = "mi-empresa">
 				
-					<input type = "button" name = "actualizar" value = "Añadir curso" id = "añadir-oferta1" class = "añadir-oferta">
+					<input type = "button" name = "actualizar" value = "Añadir promocion" id = "añadir-oferta1" class = "añadir-oferta">
 				
 					<h4>MIS PROMOCIONES</h4>
 					
@@ -91,13 +59,10 @@
 					<c:forEach items="${promociones }" var="promocion"> 	
 							<li id = "oferta-ejemplo">
 								<div class = "ofertas-descripcion">
-								<!-- TO-DO
-										Esto se deja para pruebas, 
-										Hay que mostrar solo aquellos cursos cuyo TIPO_estado == 2 -->
 									<p class = "ofertas-titulo">Nombre: ${promocion.nombrePromo }</p>
 									<c:choose>
 										<c:when test="${promocion.tipo_promo == 0 }">
-											<p class = "ofertas-titulo">Descuento Fijo: ${promocion.descuento }€ descuento</p>
+											<p class = "ofertas-titulo">Descuento Fijo: ${promocion.descuento }% descuento</p>
 											
 										</c:when>
 										<c:otherwise>
@@ -115,35 +80,15 @@
 						</c:forEach> 
 						</ul>
 						
-						<input type = "button" name = "actualizar" value = "Añadir curso" id = "añadir-oferta2" class = "añadir-oferta">
+						<input type = "button" name = "actualizar" value = "Añadir promocion" id = "añadir-oferta2" class = "añadir-oferta">
 						
 						<c:if test="${ mensaje != null }">
 							<p class="error">${mensaje }</p>
 						</c:if>
 						
-						<div id="añadir">
+						<div id="aÃ±adir">
 
-					        <h2> Añade un nuevo curso </h2>  
-							
-							<!-- ******************* TO-DO ******************* -->
-					        <!-- ******* AÑADIR FOTOGRAFIA DEL CURSO ********* -->
-					        <!-- http://www.tutorialspoint.com/jsp/jsp_file_uploading.htm -->
-					        <!-- INCLUIR EN WEB.XML
-					        <web-app>
-								....
-								<context-param> 
-   									<description>Location to store uploaded file</description> 
-    								<param-name>file-upload</param-name> 
-    								<param-value>
-         								c:\apache-tomcat-5.5.29\webapps\data\
-     								</param-value> 
-								</context-param>
-								....
-								
-							</web-app> 
-							-->
-							
-							<!-- ***************************************************************** -->
+					        <h2> AÃ±ade una nueva Promocion</h2>  
 			
 							<form action="AltaPromociones" method="post">
 							
@@ -181,20 +126,12 @@
 						        <p  id="mens4">No ha especificado la fecha final de la promocion*</p>
 								<textarea name="fecha_fin" id="fecha_fin"></textarea>
 					        </div>
-					
-							<!-- Precio de matricula 
-
-					        <div id="formul5">  
-					        	<p class="nombre">Precio de matricula<span class=aster>*</span>:</p>  
-						        <p  id="mens5">No ha especificado precio de matricula*</p>
-						        <input  type="text" name="precio" id="añadir-precio" placeholder = "Precio de matricula"/>
-					        </div>-->
 
 							<div id="formul6">  
 					        	<p class="nombre">Recuerde que solo puede haber una promocion activa.<span class=aster>*</span>.</p>  
 					        </div>
 
-					        <!-- Boton añadir -->
+					        <!-- Boton aÃ±adir -->
 
 							<input type="submit" id="añadirboton" value="Añadir" />
 							</form>
@@ -202,39 +139,12 @@
 					</div>
 					
 				</div>
-				
-				<div id = "seguidores">
-				
-					<h5> seguidores </h5>
-					
-					<ul>
-					
-						<li>
-							<img class = "seguidores-foto" src = "images/famosos/gates.jpg" alt = "Error en la imagen">
-							<p class = "seguidores-info">Bill Gates</p></li>
-					
-					</ul>
-				
-				</div>
-					
 
 			</section>
 
 	
 			<!--PIE DE PAGINA-->
 
-			<footer>  
-				<ul id="pie">
-					<li> Copyright © jooglecam.com</li>
-				 	<li><a href="#">Aviso legal	</a></li>
-				 	<li><a href="#">Privacidad 	 </a></li>
-				 	<li><a href="#">Política de cookies	</a></li>
-				 	<li><a href="#">Accesibilidad  </a></li>
-				 	<li><a href="#">Contacto </a></li>
-				 	<li><a href="#">Ayuda  </a></li>
-				</ul>
-			</footer>
-		
 		<script src ="<c:url value="script/empresa-mis-ofertas.js" />" type = "text/javascript" ></script>
 		
 		

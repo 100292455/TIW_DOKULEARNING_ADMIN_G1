@@ -35,7 +35,7 @@
 			
 				<form action="Administracion" method="post">				
 					<div class="AceptarNuevo">
-						<input type="hidden" name="filtro" value="CursosPendientes">
+						<input type="hidden" name="filtro" value="AdministrarCursosPendientes">
 						<button type="submit">
 							<div id="IrAdministrarCursosPendientes" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
 							Administrar Cursos Pendientes de Validar
@@ -45,10 +45,20 @@
 				</form>
 				<form action="Administracion" method="post">				
 					<div class="AceptarNuevo">
-						<input type="hidden" name="filtro" value="GestionCupones">
+						<input type="hidden" name="filtro" value="AdministrarPromociones">
 						<button type="submit">
-							<div id="IrGestionarCupones" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
-							Gestionar Cupones
+							<div id="IrAdministrarPromociones" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
+							Administrar Promociones
+							</div>
+						</button>
+					</div>
+				</form>
+				<form action="Administracion" method="post">				
+					<div class="AceptarNuevo">
+						<input type="hidden" name="filtro" value="AdministrarCursosDestacados">
+						<button type="submit">
+							<div id="IrAdministrarCursosDestacados" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
+							Administrar Cursos Destacados
 							</div>
 						</button>
 					</div>

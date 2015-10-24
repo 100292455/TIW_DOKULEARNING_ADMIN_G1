@@ -16,23 +16,23 @@ import es.uc3m.tiw.web.dominio.Curso;
 @WebServlet("/Administracion")
 public class Admin_AdministradorServlet extends HttpServlet {
 	private static final String ENTRADA_JSP = "/Admin_Administrador.jsp";
-	private static final String VALIDARCURSOS_JSP = "/Admin_ValidarCursos.jsp";
-	private static final String GSETIONARCUPONES_JSP = "/GestionCupones.jsp";
+	private static final String VALIDAR_CURSOS_JSP = "/Admin_ValidarCursos.jsp";
+	private static final String ADMIN_DESTACADOS_JSP = "/Admin_CursosDestacados.jsp";
+	private static final String ADMIN_PROMOCIONES_JSP = "/GestionPromociones.jsp";
 	private static final long serialVersionUID = 1L;
-	private Curso curso;
 	private ArrayList<Curso> cursos;
 	private int new_IDCurso = 0;
 	@Override
 	public void init() throws ServletException {
 	
 		cursos = new ArrayList<Curso>();
-		Curso ingles = new Curso(new_IDCurso, "ingles", "curso ingles", 1, 10, 50, 50, 0, 1, 0);
+		Curso ingles = new Curso(new_IDCurso, "ingles", "curso ingles", 1, 10, 50, 50, 1, 1, 0);
 		new_IDCurso++;
-		Curso frances = new Curso(new_IDCurso, "frances", "curso frances", 1, 10, 50, 50, 0, 1, 0);
+		Curso frances = new Curso(new_IDCurso, "frances", "curso frances", 1, 10, 50, 50, 1, 1, 0);
 		new_IDCurso++;
 		Curso italiano = new Curso(new_IDCurso, "italiano", "curso italiano", 0, 20, 80, 80, 0, 2, 0);
 		new_IDCurso++;
-		Curso matematicas = new Curso(new_IDCurso, "matematicas", "curso matematicas", 2, 10, 50, 50, 0, 2, 0);
+		Curso matematicas = new Curso(new_IDCurso, "matematicas", "curso matematicas", 2, 10, 50, 50, 0, 2, 1);
 		new_IDCurso++;
 		cursos.add(ingles);
 		cursos.add(frances);
@@ -46,7 +46,7 @@ public class Admin_AdministradorServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(VALIDARCURSOS_JSP).forward(request, response);
+		this.getServletContext().getRequestDispatcher(VALIDAR_CURSOS_JSP).forward(request, response);
 	}
 
 	/**
@@ -62,18 +62,18 @@ public class Admin_AdministradorServlet extends HttpServlet {
 			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
 		}
 		
-		if(filtro.equals("CursosPendientes")){
-			pagina = VALIDARCURSOS_JSP;
+		if(filtro.equals("AdministrarCursosPendientes")){
+			pagina = VALIDAR_CURSOS_JSP;
 			HttpSession sesion = request.getSession();	
 			ServletContext context = sesion.getServletContext();
-			/* Recuperar de DB -> CURSOS WHERE TIPO_estado = 1 */
-			context.removeAttribute("cursos");
-			context.setAttribute("cursos", cursos);
+			/* Recuperar de DB -> CURSOS WHERE TIPO_estado = 0 */
+			ArrayList<Curso> cursosValidar = obtenerCursosPendValidar(cursos);
+			context.setAttribute("cursosValidar", cursosValidar);
 				
 			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
 		}
-		if(filtro.equals("GestionCupones")){
-			pagina = GSETIONARCUPONES_JSP;
+		if(filtro.equals("AdministrarPromociones")){
+			pagina = ADMIN_PROMOCIONES_JSP;
 			HttpSession sesion = request.getSession();	
 			ServletContext context = sesion.getServletContext();
 			/* Recuperar de DB -> todos los CURSOS */
@@ -82,9 +82,47 @@ public class Admin_AdministradorServlet extends HttpServlet {
 				
 			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
 		}
+		if(filtro.equals("AdministrarCursosDestacados")){
+			pagina = ADMIN_DESTACADOS_JSP;
+			HttpSession sesion = request.getSession();	
+			ServletContext context = sesion.getServletContext();
+			/* Recuperar de DB -> CURSOS WHERE TIPO_destacado = 0 */
+			ArrayList<Curso> cursosDestacados = obtenerCursosDestacados(cursos);
+			context.removeAttribute("cursos");
+			context.setAttribute("cursosDestacados", cursosDestacados);
+				
+			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
+		}
 		else {
 			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
 		}
+	}
+
+
+	private ArrayList<Curso> obtenerCursosPendValidar(ArrayList<Curso> cursos) {
+
+		ArrayList<Curso> cursosPendValidar = new ArrayList<Curso>();
+		
+		for (Curso curso : cursos) {
+			if (curso.getTIPO_estado() == 0) {
+				cursosPendValidar.add(curso);
+			}
+		}
+		
+		return cursosPendValidar;
+	}
+	
+	private ArrayList<Curso> obtenerCursosDestacados(ArrayList<Curso> cursos) {
+
+		ArrayList<Curso> cursosDestacados = new ArrayList<Curso>();
+		
+		for (Curso curso : cursos) {
+			if (curso.getTIPO_destacado() == 0) {
+				cursosDestacados.add(curso);
+			}
+		}
+		
+		return cursosDestacados;
 	}
 	
 }

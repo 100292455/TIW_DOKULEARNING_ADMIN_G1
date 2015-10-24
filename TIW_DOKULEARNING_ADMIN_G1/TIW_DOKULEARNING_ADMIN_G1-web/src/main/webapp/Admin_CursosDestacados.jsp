@@ -8,7 +8,7 @@
 
 		<!-- Información sobre el documento -->
 	
-		<title>Practica TIW: Administracion - Validar Cursos</title>
+		<title>Practica TIW: Administracion - Administrar Destacados</title>
 		<meta charset="UTF-8">
 		<meta name="keywords" content="e-learning, cursos">
 		<meta name="description" content="Adminsitracion de Web de cursos en linea">
@@ -27,7 +27,7 @@
 			
 			<header>
 			
-				<div class="AreaPersonal" style="color:white;">Cursos Pendientes de Validar</div>
+				<div class="AreaPersonal" style="color:white;">Administrar Cursos Destacados</div>
 			
 			</header>
 			
@@ -36,13 +36,13 @@
 	
 			<section> 
 			<c:choose>
-				<c:when test="${empty cursosValidar }">
+				<c:when test="${empty cursosDestacados }">
 					<!-- cursos es un atributo metido en el request por eso no es necesario 
 					ponerle el prefijo param -->
-					<p class="error">Actualmente no hay cursos pendientes de validar.</p>
+					<p class="error">Actualmente no hay cursos que destacar.</p>
 				</c:when>
 				<c:otherwise>
-		 		<c:forEach items="${cursosValidar }" var="curso"> 
+		 		<c:forEach items="${cursosDestacados }" var="curso"> 
 				<!-- recorremos todos los objetos de la coleccion cursos 
 					y cada objeto devuelto lo asignamos a la variable curso -->
 				<ul style="list-style-type: none;">
@@ -68,7 +68,7 @@
 						</div>
 						
 						<div class = "ofertas-edicion">
-							<a style="color:white; font-weight:bold"href="ValidaCurso?IdCurso=${curso.ID_curso}">VALIDAR</a>
+							<a style="color:white; font-weight:bold"href="DestacaCurso?IdCurso=${curso.ID_curso}">DESTACAR</a>
 						</div>
 								
 					</li>

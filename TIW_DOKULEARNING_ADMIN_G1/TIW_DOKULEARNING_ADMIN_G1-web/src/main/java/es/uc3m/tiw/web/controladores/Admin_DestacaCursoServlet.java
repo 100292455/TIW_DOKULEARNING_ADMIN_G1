@@ -13,9 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import es.uc3m.tiw.web.dominio.Curso;
 
-@WebServlet("/ValidaCurso")
-public class Admin_ValidaCursoServlet extends HttpServlet {
-	private static final String VALIDACURSO_JSP = "/Admin_ValidarCursos.jsp";
+@WebServlet("/DestacaCurso")
+public class Admin_DestacaCursoServlet extends HttpServlet {
+	private static final String DESTACACURSO_JSP = "/Admin_CursosDestacados.jsp";
 	private static final long serialVersionUID = 1L;
 	@Override
 	public void init() throws ServletException {
@@ -29,26 +29,26 @@ public class Admin_ValidaCursoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pagina = "";
-		pagina = VALIDACURSO_JSP;
+		pagina = DESTACACURSO_JSP;
 		
 		HttpSession sesion = request.getSession();	
 		ServletContext context = sesion.getServletContext();
 		String idCursoStr = request.getParameter("IdCurso");
 		int idCurso = Integer.parseInt(idCursoStr);
-		ArrayList<Curso> cursos = (ArrayList<Curso>) context.getAttribute("cursosValidar");
-		context.removeAttribute("cursosValidar");
+		ArrayList<Curso> cursos = (ArrayList<Curso>) context.getAttribute("cursosDestacados");
+		context.removeAttribute("cursosDestacados");
 		
 		for (Curso curso : cursos) {
 			if (curso.getID_curso() == idCurso) {
-				/* UPDATE CURSOS WHERE ID_CURSO = idCurso , SET TIPO_estado = 2 */
-				curso.setTIPO_estado(2);
+				/* UPDATE CURSOS WHERE ID_CURSO = idCurso , SET TIPO_destacado = 1 */
+				curso.setTIPO_destacado(1);
 				cursos.remove(curso);
 				break;
 			}
 		}
 		/* DEVOLVER LOS CURSOS CON TIPO_estado = 1  */
 
-		context.setAttribute("cursosValidar", cursos);
+		context.setAttribute("cursosDestacados", cursos);
 		
 		this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
 	}
