@@ -34,15 +34,25 @@
 			<section> 
 				
 				<div style="float: left; margin-top: 50px; margin-left: 300px; border: 1px double">
-					<div style="float: left; margin-right: 20px; margin-left: 20px; width: 160px">
-						<input type="text" id="UsuarioLogin" style="margin-top: 20px; margin-bottom: 20px; width: 150px"
-			placeholder="Usuario"> 
-						<input type="password" id="ContraseniaLogin" style="margin-bottom: 20px; width: 150px"
-			placeholder="Contraseña">
-					</div>
-					<div style="float: left; margin-right: 20px; margin-top: 38px;">
-						<input type="button" id="AccesoLogin" value="Acceder"">
-					</div>
+					<form method = "post" action = "LoginServlet">
+						<div style="float: left; margin-right: 20px; margin-left: 20px; width: 160px">
+							<c:choose>
+								<c:when test="${not empty mensaje}">
+									<p class = "error">${mensaje}</p>
+								</c:when>
+								<c:otherwise>
+									<p>Iniciar sesion</p>
+								</c:otherwise>
+							</c:choose>
+							<input type="text" name ="usuariologin" id="UsuarioLogin" style="margin-top: 20px; margin-bottom: 20px; width: 150px"
+				placeholder="Usuario"> 
+							<input type="password" name = "passwordlogin" id="ContraseniaLogin" style="margin-bottom: 20px; width: 150px"
+				placeholder="Contraseña">
+						</div>
+						<div style="float: left; margin-right: 20px; margin-top: 38px;">
+							<input type="submit" id="AccesoLogin" value="Acceder"/>
+						</div>
+					</form>
 			</div>
 
 			</section>		

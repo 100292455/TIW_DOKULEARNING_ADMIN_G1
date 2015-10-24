@@ -88,7 +88,7 @@
 						
 						<div id="aÃ±adir">
 
-					        <h2> AÃ±ade una nueva Promocion</h2>  
+					        <h2> Añade una nueva Promocion</h2>  
 			
 							<form action="AltaPromociones" method="post">
 							

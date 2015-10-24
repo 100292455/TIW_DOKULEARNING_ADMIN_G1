@@ -66,11 +66,9 @@
 				<!-- TO-DO -->
 				<form action="Admin_DesconectaLogin" method="post">
 					<div style="float: left; width: 33.5%; margin-top: 14px; margin-bottom: 14px;">
-						<button type="submit">
-							<div id="logout" class="BotonBaseDoku" style="float: left; margin-left: 6%; top: 0px; border: 4px double red !important">
-							Desconectar
-							</div>
-						</button>
+						
+							<a href= "Admin_Login.jsp?accion=salir">Salir</a>
+						
 					</div>
 				</form>
 				<!-- ******************** -->
