@@ -50,7 +50,7 @@
 					
 					<div id = "ofertas">
 				 		<c:if test="${empty promociones }">
-							<!-- cursos es un atributo metido en el request por eso no es necesario 
+							<!-- promociones es un atributo metido en el request por eso no es necesario 
 							ponerle el prefijo param -->
 							<p class="error">Actualmente no hay promociones.</p>
 						</c:if>
@@ -86,7 +86,7 @@
 							<p class="error">${mensaje }</p>
 						</c:if>
 						
-						<div id="aÃ±adir">
+						<div id="añadir">
 
 					        <h2> Añade una nueva Promocion</h2>  
 			

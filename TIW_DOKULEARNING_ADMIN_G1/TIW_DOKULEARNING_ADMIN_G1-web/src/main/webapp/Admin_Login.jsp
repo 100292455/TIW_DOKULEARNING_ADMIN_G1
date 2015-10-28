@@ -34,6 +34,9 @@
 			<section> 
 				
 				<div style="float: left; margin-top: 50px; margin-left: 300px; border: 1px double">
+				
+				<!-- Form que llama a login_servlet para autorizar al usuario en la herramienta de administraicon -->
+				
 					<form method = "post" action = "LoginServlet">
 						<div style="float: left; margin-right: 20px; margin-left: 20px; width: 160px">
 							<c:choose>

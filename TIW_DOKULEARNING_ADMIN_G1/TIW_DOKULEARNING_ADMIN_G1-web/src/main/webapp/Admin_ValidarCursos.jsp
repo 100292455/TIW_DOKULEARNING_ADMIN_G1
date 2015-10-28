@@ -37,13 +37,13 @@
 			<section> 
 			<c:choose>
 				<c:when test="${empty cursosValidar }">
-					<!-- cursos es un atributo metido en el request por eso no es necesario 
+					<!-- cursosValidar es un atributo metido en el request por eso no es necesario 
 					ponerle el prefijo param -->
 					<p class="error">Actualmente no hay cursos pendientes de validar.</p>
 				</c:when>
 				<c:otherwise>
 		 		<c:forEach items="${cursosValidar }" var="curso"> 
-				<!-- recorremos todos los objetos de la coleccion cursos 
+				<!-- recorremos todos los objetos de la coleccion cursosValidar 
 					y cada objeto devuelto lo asignamos a la variable curso -->
 				<ul style="list-style-type: none;">
 					<li id = "oferta-ejemplo${curso.ID_curso}">

@@ -3,6 +3,7 @@ package es.uc3m.tiw.web.controladores;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,13 +55,14 @@ public class LoginServlet extends HttpServlet {
 		pagina = LOGIN_JSP;
 		
 		HttpSession sesion = request.getSession();
+		ServletContext context = sesion.getServletContext();
 		Usuario u = comprobarUsuario(user, password);
 		
 		if (u != null){
 			pagina = ENTRADA_JSP;
 			sesion.setAttribute("usuarios", usuarios);
 			sesion.setAttribute("usuario", u);
-			sesion.setAttribute("acceso", "ok");
+			context.setAttribute("acceso", "ok");
 		}
 		
 		else {

@@ -33,8 +33,10 @@
 	 
 			<section> 
 			
+			<!-- pasamos al servlet Admin_Administrador por request el filtro para poder controlar a donde redirige cada boton -->
+				
 				<form action="Administracion" method="post">				
-					<div class="AceptarNuevo">
+					<div class="AceptarNuevo">	
 						<input type="hidden" name="filtro" value="AdministrarCursosPendientes">
 						<button type="submit">
 							<div id="IrAdministrarCursosPendientes" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
@@ -63,7 +65,7 @@
 						</button>
 					</div>
 				</form>
-				<!-- TO-DO -->
+				<!-- Form para desonectarse de la herramienta de administracion -->
 				<form action="Admin_DesconectaLogin" method="post">
 					<div style="float: left; width: 33.5%; margin-top: 14px; margin-bottom: 14px;">
 						
@@ -71,7 +73,6 @@
 						
 					</div>
 				</form>
-				<!-- ******************** -->
 			</section>		
 		
 	</body>

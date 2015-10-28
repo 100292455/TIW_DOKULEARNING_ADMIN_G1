@@ -5,18 +5,21 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.spi.http.HttpContext;
 
 /**
  * Este filtro intercepta cualquier peticion que vaya a la pagina listado.jsp y comprueba que el usuario se haya autenticado con un token en sesion, en caso contrario le devuelve a la pagina de login.jsp
  * @author David Palomar
  */
-//@WebFilter( urlPatterns = { "/contenidoCurso.jsp" })
-public class ContenidoCursoFilter implements Filter {
+@WebFilter( urlPatterns = { "/Admin_Administrador.jsp" , "/Admin_CursosDestacados.jsp" , "/Admin_ValidarCursos.jsp" , "/GestionPromociones.jsp"})
+public class Admin_Filtro implements Filter {
 
 
 
@@ -26,8 +29,8 @@ public class ContenidoCursoFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		HttpSession sesion =  ((HttpServletRequest)request).getSession(); //accedemos a la sesion del servidor usando un casting al objeto HttpServletRequest ya que nos pasan solamente ServletRequest
-		
-		if (sesion.getAttribute("acceso")!=null && sesion.getAttribute("acceso").equals("ok")) { //buscamos el token de autenticacion
+		ServletContext context = sesion.getServletContext();
+		if (context.getAttribute("acceso")!=null && context.getAttribute("acceso").equals("ok")) { //buscamos el token de autenticacion
 			
 			chain.doFilter(request, response); 
 		}else{

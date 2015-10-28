@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import es.uc3m.tiw.web.dominio.Curso;
 
 @WebServlet("/Administracion")
+/* Clase que funciona como controlador de la herramienta de administracion */
 public class Admin_AdministradorServlet extends HttpServlet {
 	private static final String ENTRADA_JSP = "/Admin_Administrador.jsp";
 	private static final String VALIDAR_CURSOS_JSP = "/Admin_ValidarCursos.jsp";
@@ -24,7 +25,7 @@ public class Admin_AdministradorServlet extends HttpServlet {
 	private int new_IDCurso = 0;
 	@Override
 	public void init() throws ServletException {
-	
+	/* Creamos unos cursos de prueba, estos cursos se rescataran de la BBDD cuando la haya */
 		cursos = new ArrayList<Curso>();
 		Curso ingles = new Curso(new_IDCurso, "ingles", "curso ingles", 1, 10, 50, 50, 1, 1, 0);
 		new_IDCurso++;
@@ -57,6 +58,8 @@ public class Admin_AdministradorServlet extends HttpServlet {
 		String filtro = request.getParameter("filtro");
 		String pagina = "";
 		pagina = ENTRADA_JSP;
+		
+		/* En funcion de lo introducida en "filtro" redirigimos a una pagina jsp u otra */
 		
 		if(filtro.equals("IrMenu")){
 			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
@@ -98,7 +101,7 @@ public class Admin_AdministradorServlet extends HttpServlet {
 		}
 	}
 
-
+	/* metodo que recupera los cursos pendientes de validar del arrayList que simula la BBDD */
 	private ArrayList<Curso> obtenerCursosPendValidar(ArrayList<Curso> cursos) {
 
 		ArrayList<Curso> cursosPendValidar = new ArrayList<Curso>();
@@ -112,6 +115,7 @@ public class Admin_AdministradorServlet extends HttpServlet {
 		return cursosPendValidar;
 	}
 	
+	/* Metodo que recupera los cursos que no estan destacados en la BBDD, se simula a traves del arrayList */
 	private ArrayList<Curso> obtenerCursosDestacados(ArrayList<Curso> cursos) {
 
 		ArrayList<Curso> cursosDestacados = new ArrayList<Curso>();

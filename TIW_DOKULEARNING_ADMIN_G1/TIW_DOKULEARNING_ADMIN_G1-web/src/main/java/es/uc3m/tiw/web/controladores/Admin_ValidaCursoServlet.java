@@ -27,6 +27,7 @@ public class Admin_ValidaCursoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+	/* Cada vez que el ususario clique en el boton VALIDAR, validamos el curso sore el que ha clicado y devolvemos todos los cursos sin validar que aun queden en la BBDD */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pagina = "";
 		pagina = VALIDACURSO_JSP;

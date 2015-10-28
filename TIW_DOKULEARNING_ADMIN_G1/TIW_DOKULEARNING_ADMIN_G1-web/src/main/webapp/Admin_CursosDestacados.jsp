@@ -36,21 +36,22 @@
 	
 			<section> 
 			<c:choose>
+			<!-- Rescatamos el array cursosDestacados -->
 				<c:when test="${empty cursosDestacados }">
-					<!-- cursos es un atributo metido en el request por eso no es necesario 
+					<!-- cursosDestacados es un atributo metido en el request por eso no es necesario 
 					ponerle el prefijo param -->
 					<p class="error">Actualmente no hay cursos que destacar.</p>
 				</c:when>
 				<c:otherwise>
 		 		<c:forEach items="${cursosDestacados }" var="curso"> 
-				<!-- recorremos todos los objetos de la coleccion cursos 
+				<!-- recorremos todos los objetos de la coleccion cursosDestacados
 					y cada objeto devuelto lo asignamos a la variable curso -->
 				<ul style="list-style-type: none;">
 					<li id = "oferta-ejemplo${curso.ID_curso}">
 						<div class = "ofertas-descripcion">
 							<p class="oferta-titulo">ID de curso: ${curso.ID_curso}</p>
 							<p class = "ofertas-titulo">${curso.DES_titulo }</p>
-							<p class = "ofertas-empresa">Impartido por: <!-- TO-DO cambiar COD_prof por nombre -->${curso.COD_profesor }</p>
+							<p class = "ofertas-empresa">Impartido por: <!-- TO-DO cambiar COD_prof por nombre del profesor -->${curso.COD_profesor }</p>
 							<p class = "ofertas-resumen">${curso.DES_descripcion }</p>
 							<p class = "ofertas-tipo-contrato">${curso.horas } hrs.</p>
 							<p class = "ofertas-jornada">${curso.precio_final } euros.</p>
