@@ -25,6 +25,33 @@
 				<role>Developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<name>Alejandro Ruiz</name>
+			<email>100292844@alumnos.uc3m.es</email>
+			<organization>TIW</organization>
+			<organizationUrl>http://www.dei.inf.uc3m.es</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Alvaro Gomez</name>
+			<email>100292850@alumnos.uc3m.es</email>
+			<organization>TIW</organization>
+			<organizationUrl>http://www.dei.inf.uc3m.es</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Jorge Garcia</name>
+			<email>100292903@alumnos.uc3m.es</email>
+			<organization>TIW</organization>
+			<organizationUrl>http://www.dei.inf.uc3m.es</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
 	</developers>
 	<properties>
 
