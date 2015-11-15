@@ -18,7 +18,7 @@ import javax.xml.ws.spi.http.HttpContext;
  * Este filtro intercepta cualquier peticion que vaya a la pagina listado.jsp y comprueba que el usuario se haya autenticado con un token en sesion, en caso contrario le devuelve a la pagina de login.jsp
  * @author David Palomar
  */
-@WebFilter( urlPatterns = { "/Admin_Administrador.jsp" , "/Admin_CursosDestacados.jsp" , "/Admin_ValidarCursos.jsp" , "/GestionPromociones.jsp"})
+@WebFilter( urlPatterns = { "/index.jsp" , "/Admin_CursosDestacados.jsp" , "/Admin_ValidarCursos.jsp" , "/GestionPromociones.jsp"})
 public class Admin_Filtro implements Filter {
 
 

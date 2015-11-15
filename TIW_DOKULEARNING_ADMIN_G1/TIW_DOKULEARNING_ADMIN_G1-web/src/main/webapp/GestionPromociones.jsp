@@ -154,7 +154,7 @@
 	
 			<!--PIE DE PAGINA-->
 
-		<script src ="<c:url value="script/empresa-mis-ofertas.js" />" type = "text/javascript" ></script>
+		<script src ="<c:url value="script/cupones.js" />" type = "text/javascript" ></script>
 		
 		
 	</body>

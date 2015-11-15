@@ -1,24 +1,59 @@
-package es.uc3m.tiw.web.dominio;
+package es.uc3m.tiw.model;
+
+import static javax.persistence.GenerationType.AUTO;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="curso")
 public class Curso {
-
-	int ID_curso;
-	String DES_titulo;
-	String DES_descripcion;
-	int TIPO_dificultad;
-	int horas;
-	int precio_inicial;
-	int precio_final;
-	int TIPO_destacado;
-	int COD_profesor;
+	
+	@Id
+ 	@GeneratedValue(strategy = AUTO)
+	private int ID_curso;
+	private String DES_titulo;
+	private String DES_descripcion;
+	private int TIPO_dificultad;
+	private int horas;
+	private int precio_inicial;
+	private int precio_final;
+	private int TIPO_destacado;
+	@OneToOne
+	private Usuario profesor;
+	@OneToMany
+	private List<Usuario> claustro;
 	int TIPO_estado;
-	Date FechaFinDescuento;
+	String FechaFinDescuento;
+	
+	public Curso(int iD_curso, String dES_titulo, String dES_descripcion,
+			int tIPO_dificultad, int horas, int precio_inicial,
+			int precio_final, int tIPO_destacado, Usuario Profesor,
+			int tIPO_estado, String fechaFinDescuento, List<Usuario> claustro) {
+		super();
+		ID_curso = iD_curso;
+		DES_titulo = dES_titulo;
+		DES_descripcion = dES_descripcion;
+		TIPO_dificultad = tIPO_dificultad;
+		this.horas = horas;
+		this.precio_inicial = precio_inicial;
+		this.precio_final = precio_final;
+		TIPO_destacado = tIPO_destacado;
+		profesor = Profesor;
+		TIPO_estado = tIPO_estado;
+		this.FechaFinDescuento = fechaFinDescuento;
+		this.claustro = claustro;
+	}
 	public Curso() {
 		// TODO Auto-generated constructor stub
 	}
-	
 	public Curso(int iD_curso, 
 			String dES_titulo, 
 			String dES_descripcion, 
@@ -27,8 +62,8 @@ public class Curso {
 			int precio_inicial, 
 			int precio_final,	
 			int tIPO_destacado,	
-			int cOD_profesor, 
-			int tIPO_estado) {
+			Usuario profesor, 
+			int tIPO_estado, List<Usuario> claustro) {
 		super();
 		this.ID_curso = iD_curso;
 		this.DES_titulo = dES_titulo;
@@ -38,33 +73,9 @@ public class Curso {
 		this.precio_inicial = precio_inicial;
 		this.precio_final = precio_final;
 		this.TIPO_destacado = tIPO_destacado;
-		this.COD_profesor = cOD_profesor;
+		this.profesor = profesor;
 		this.TIPO_estado = tIPO_estado;
-	}
-	
-	public Curso(int iD_curso, 
-			String dES_titulo, 
-			String dES_descripcion, 
-			int tIPO_dificultad, 
-			int horas, 
-			int precio_inicial, 
-			int precio_final,	
-			int tIPO_destacado,	
-			int cOD_profesor, 
-			int tIPO_estado,
-			Date FechaFinDescuento) {
-		super();
-		this.ID_curso = iD_curso;
-		this.DES_titulo = dES_titulo;
-		this.DES_descripcion = dES_descripcion;
-		this.TIPO_dificultad = tIPO_dificultad;
-		this.horas = horas;
-		this.precio_inicial = precio_inicial;
-		this.precio_final = precio_final;
-		this.TIPO_destacado = tIPO_destacado;
-		this.COD_profesor = cOD_profesor;
-		this.TIPO_estado = tIPO_estado;
-		this.FechaFinDescuento = FechaFinDescuento;
+		this.claustro = claustro;
 	}
 	public Curso(String titulo, String descripcion, int dificultad, int horas, int precio_inicial) {
 		super();
@@ -73,6 +84,18 @@ public class Curso {
 		this.TIPO_dificultad = dificultad;
 		this.horas = horas;
 		this.precio_inicial = precio_inicial;
+	}
+	public List<Usuario> getClaustro() {
+		return claustro;
+	}
+	public void setClaustro(List<Usuario> claustro) {
+		this.claustro = claustro;
+	}
+	public String getFechaFinDescuento() {
+		return FechaFinDescuento;
+	}
+	public void setFechaFinDescuento(String fechaFinDescuento) {
+		this.FechaFinDescuento = fechaFinDescuento;
 	}
 	public int getID_curso() {
 		return ID_curso;
@@ -122,23 +145,17 @@ public class Curso {
 	public void setTIPO_destacado(int tIPO_destacado) {
 		TIPO_destacado = tIPO_destacado;
 	}
-	public int getCOD_profesor() {
-		return COD_profesor;
+	public Usuario getProfesor() {
+		return profesor;
 	}
-	public void setCOD_profesor(int cOD_profesor) {
-		COD_profesor = cOD_profesor;
+	public void setProfesor(Usuario Profesor) {
+		profesor = Profesor;
 	}
 	public int getTIPO_estado() {
 		return TIPO_estado;
 	}
 	public void setTIPO_estado(int tIPO_estado) {
 		TIPO_estado = tIPO_estado;
-	}
-	public Date getFechaFinDescuento() {
-		return FechaFinDescuento;
-	}
-	public void setFechaFinDescuento(Date fechaFinDescuento) {
-		FechaFinDescuento = fechaFinDescuento;
 	}
 	
 	

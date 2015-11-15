@@ -1,8 +1,12 @@
 package es.uc3m.tiw.web.controladores;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,23 +14,48 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.UserTransaction;
 
-import es.uc3m.tiw.web.dominio.Curso;
-import es.uc3m.tiw.web.dominio.Promocion;
+import es.uc3m.tiw.model.Curso;
+import es.uc3m.tiw.model.Cupon;
+import es.uc3m.tiw.model.Promocion;
+import es.uc3m.tiw.model.Usuario;
+import es.uc3m.tiw.model.dao.CursoDAO;
+import es.uc3m.tiw.model.dao.CursoDAOImpl;
+import es.uc3m.tiw.model.dao.CuponDAOImpl;
+import es.uc3m.tiw.model.dao.CuponDAO;
+import es.uc3m.tiw.model.dao.MatriculaDAO;
+import es.uc3m.tiw.model.dao.MatriculaDAOImpl;
+import es.uc3m.tiw.model.dao.PromocionDAOImpl;
+import es.uc3m.tiw.model.dao.PromocionDAO;
 
 @WebServlet("/AltaPromociones")
 public class AltaPromocionesServlet extends HttpServlet {
 	private static final String ENTRADA_JSP = "/GestionPromociones.jsp";
 	private static final String GESTION_CURSOS_JSP = "/GestionPromociones.jsp";
 	private static final long serialVersionUID = 1L;
-	private Promocion promocion;
-	private ArrayList<Promocion> promociones;
-	private int new_IDPromo = 0;
-	@Override
-	public void init() throws ServletException {
+	@PersistenceContext(unitName = "demoTIW")
+	private EntityManager em;
+	@Resource
+	private UserTransaction ut;
+	private ServletConfig config2;
+	private PromocionDAO promDao;
+	private CuponDAO cupDao;
+	private CursoDAO curDao;
 	
-		promociones = new ArrayList<Promocion>();
-		
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		config2 = config;
+		cupDao = new CuponDAOImpl(em, ut);
+		curDao = new CursoDAOImpl(em, ut);
+		promDao = new PromocionDAOImpl(em, ut);
+
+	}
+	
+	public void destroy() {
+		cupDao = null;
+		curDao = null;
+		promDao = null;
 	}
        
 
@@ -54,21 +83,28 @@ public class AltaPromocionesServlet extends HttpServlet {
 		pagina = GESTION_CURSOS_JSP;
 		HttpSession sesion = request.getSession();	
 		ServletContext context = sesion.getServletContext();
-		
+		Promocion p = new Promocion();
 		String m = comprobarPromocion(nombrePromo, precio1, tipo_promocion1, fecha_fin);
-		if (m == null || m == ""){
+		if (m .equals(null) || m .equals("")){
 			int precio2 = Integer.parseInt(precio1);
 			int tipo_promocion2 = Integer.parseInt(tipo_promocion1);
-			Promocion p = crearPromocion(nombrePromo, precio2, tipo_promocion2, fecha_fin);
+			p = crearPromocion(nombrePromo, precio2, tipo_promocion2, fecha_fin);
 			pagina = ENTRADA_JSP;
-			context.setAttribute("promociones", promociones);
-			context.setAttribute("promocion", promocion);
+			try {
+				p=promDao.guardarPromocion(p);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Collection<Promocion> promociones = promDao.buscarTodosLosPromociones();
+			sesion.setAttribute("promociones", promociones);
+			sesion.setAttribute("promocion", p);
 			
 		}else{
 			
 			mensaje = m;
 			request.setAttribute("mensaje", mensaje);
-			context.setAttribute("promocion", promocion);
+			sesion.setAttribute("promocion", p);
 		}
 			
 			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
@@ -80,15 +116,9 @@ public class AltaPromocionesServlet extends HttpServlet {
 		Promocion p = new Promocion();
 		
 		p.setNombrePromo(nombrePromo);
-		p.setId_promo(new_IDPromo);
 		p.setDescuento(precio);
 		p.setTipo_promo(tipo_promocion);
 		p.setFecha_fin(fecha_fin);
-
-		/* AÑADIR Promocion A LA TABLA DE Promociones */
-		promociones.add(p);
-		new_IDPromo++;
-		
 		return p;
 	}
 

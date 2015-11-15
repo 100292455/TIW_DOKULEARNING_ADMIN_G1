@@ -1,8 +1,12 @@
 package es.uc3m.tiw.web.controladores;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,35 +14,50 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.UserTransaction;
 
-import es.uc3m.tiw.web.dominio.Curso;
+import es.uc3m.tiw.model.Curso;
+import es.uc3m.tiw.model.Cupon;
+import es.uc3m.tiw.model.Promocion;
+import es.uc3m.tiw.model.Usuario;
+import es.uc3m.tiw.model.dao.CursoDAO;
+import es.uc3m.tiw.model.dao.CursoDAOImpl;
+import es.uc3m.tiw.model.dao.CuponDAOImpl;
+import es.uc3m.tiw.model.dao.CuponDAO;
+import es.uc3m.tiw.model.dao.MatriculaDAO;
+import es.uc3m.tiw.model.dao.MatriculaDAOImpl;
+import es.uc3m.tiw.model.dao.PromocionDAOImpl;
+import es.uc3m.tiw.model.dao.PromocionDAO;
 
 @WebServlet("/Administracion")
 /* Clase que funciona como controlador de la herramienta de administracion */
 public class Admin_AdministradorServlet extends HttpServlet {
-	private static final String ENTRADA_JSP = "/Admin_Administrador.jsp";
+	private static final String ENTRADA_JSP = "/index.jsp";
 	private static final String VALIDAR_CURSOS_JSP = "/Admin_ValidarCursos.jsp";
 	private static final String ADMIN_DESTACADOS_JSP = "/Admin_CursosDestacados.jsp";
 	private static final String ADMIN_PROMOCIONES_JSP = "/GestionPromociones.jsp";
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Curso> cursos;
-	private int new_IDCurso = 0;
+	@PersistenceContext(unitName = "demoTIW")
+	private EntityManager em;
+	@Resource
+	private UserTransaction ut;
+	private ServletConfig config2;
+	private PromocionDAO promDao;
+	private CuponDAO cupDao;
+	private CursoDAO curDao;
 	@Override
-	public void init() throws ServletException {
-	/* Creamos unos cursos de prueba, estos cursos se rescataran de la BBDD cuando la haya */
-		cursos = new ArrayList<Curso>();
-		Curso ingles = new Curso(new_IDCurso, "ingles", "curso ingles", 1, 10, 50, 50, 1, 1, 0);
-		new_IDCurso++;
-		Curso frances = new Curso(new_IDCurso, "frances", "curso frances", 1, 10, 50, 50, 1, 1, 0);
-		new_IDCurso++;
-		Curso italiano = new Curso(new_IDCurso, "italiano", "curso italiano", 0, 20, 80, 80, 0, 2, 0);
-		new_IDCurso++;
-		Curso matematicas = new Curso(new_IDCurso, "matematicas", "curso matematicas", 2, 10, 50, 50, 0, 2, 1);
-		new_IDCurso++;
-		cursos.add(ingles);
-		cursos.add(frances);
-		cursos.add(italiano);
-		cursos.add(matematicas);
+	public void init(ServletConfig config) throws ServletException {
+		config2 = config;
+		cupDao = new CuponDAOImpl(em, ut);
+		curDao = new CursoDAOImpl(em, ut);
+		promDao = new PromocionDAOImpl(em, ut);
+
+	}
+	
+	public void destroy() {
+		cupDao = null;
+		curDao = null;
+		promDao = null;
 	}
        
 
@@ -70,18 +89,19 @@ public class Admin_AdministradorServlet extends HttpServlet {
 			HttpSession sesion = request.getSession();	
 			ServletContext context = sesion.getServletContext();
 			/* Recuperar de DB -> CURSOS WHERE TIPO_estado = 0 */
-			ArrayList<Curso> cursosValidar = obtenerCursosPendValidar(cursos);
-			context.setAttribute("cursosValidar", cursosValidar);
+			Collection<Curso> cursosSinValidar = curDao.recuperarCursosPorDEstado(0);
+			sesion.setAttribute("cursosValidar", cursosSinValidar);
 				
 			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
 		}
+		
 		if(filtro.equals("AdministrarPromociones")){
 			pagina = ADMIN_PROMOCIONES_JSP;
 			HttpSession sesion = request.getSession();	
 			ServletContext context = sesion.getServletContext();
 			/* Recuperar de DB -> todos los CURSOS */
-			context.removeAttribute("cursos");
-			context.setAttribute("cursos", cursos);
+			Collection<Curso> cursos = curDao.buscarTodosLosCursos();
+			sesion.setAttribute("cursos", cursos);
 				
 			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
 		}
@@ -90,43 +110,11 @@ public class Admin_AdministradorServlet extends HttpServlet {
 			HttpSession sesion = request.getSession();	
 			ServletContext context = sesion.getServletContext();
 			/* Recuperar de DB -> CURSOS WHERE TIPO_destacado = 0 */
-			ArrayList<Curso> cursosDestacados = obtenerCursosDestacados(cursos);
-			context.removeAttribute("cursos");
-			context.setAttribute("cursosDestacados", cursosDestacados);
+			Collection<Curso> cursosDestacados = curDao.recuperarCursosPorDestacado(0);
+			sesion.setAttribute("cursosDestacados", cursosDestacados);
 				
 			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
 		}
-		else {
-			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
-		}
-	}
-
-	/* metodo que recupera los cursos pendientes de validar del arrayList que simula la BBDD */
-	private ArrayList<Curso> obtenerCursosPendValidar(ArrayList<Curso> cursos) {
-
-		ArrayList<Curso> cursosPendValidar = new ArrayList<Curso>();
-		
-		for (Curso curso : cursos) {
-			if (curso.getTIPO_estado() == 0) {
-				cursosPendValidar.add(curso);
-			}
-		}
-		
-		return cursosPendValidar;
-	}
-	
-	/* Metodo que recupera los cursos que no estan destacados en la BBDD, se simula a traves del arrayList */
-	private ArrayList<Curso> obtenerCursosDestacados(ArrayList<Curso> cursos) {
-
-		ArrayList<Curso> cursosDestacados = new ArrayList<Curso>();
-		
-		for (Curso curso : cursos) {
-			if (curso.getTIPO_destacado() == 0) {
-				cursosDestacados.add(curso);
-			}
-		}
-		
-		return cursosDestacados;
 	}
 	
 }

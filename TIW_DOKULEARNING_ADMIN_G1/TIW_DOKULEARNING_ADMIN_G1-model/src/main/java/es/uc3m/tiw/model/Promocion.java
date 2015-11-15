@@ -1,29 +1,49 @@
-package es.uc3m.tiw.web.dominio;
+package es.uc3m.tiw.model;
 
-import java.util.Date;
+import static javax.persistence.GenerationType.AUTO;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="promocion")
 public class Promocion {
 	
 	public Promocion() {
 		super();
 	}
-	String nombrePromo;
+	
+	@Id
+ 	@GeneratedValue(strategy = AUTO)
 	int id_promo;
+	String nombrePromo;
 	String fecha_fin;
 	int descuento;
-	int  tipo_promo;
+	int tipo_promo;
+	@OneToOne
+	Usuario profesor;
 	
 
 	public Promocion(String nombrePromo, int id_promo, String fecha_fin,
-			int descuento, int tipo_promo) {
+			int descuento, int tipo_promo, Usuario profesor) {
 		super();
 		this.nombrePromo = nombrePromo;
 		this.id_promo = id_promo;
 		this.fecha_fin = fecha_fin;
 		this.descuento = descuento;
 		this.tipo_promo = tipo_promo;
+		this.profesor = profesor;
 	}
 	
+	public Usuario getProfesor() {
+		return profesor;
+	}
+	public void setProfesor(Usuario profesor) {
+		this.profesor = profesor;
+	}	
 	public String getNombrePromo() {
 		return nombrePromo;
 	}

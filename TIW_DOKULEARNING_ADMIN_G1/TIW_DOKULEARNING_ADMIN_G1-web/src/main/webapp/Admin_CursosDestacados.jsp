@@ -36,7 +36,6 @@
 	
 			<section> 
 			<c:choose>
-			<!-- Rescatamos el array cursosDestacados -->
 				<c:when test="${empty cursosDestacados }">
 					<!-- cursosDestacados es un atributo metido en el request por eso no es necesario 
 					ponerle el prefijo param -->
@@ -51,7 +50,7 @@
 						<div class = "ofertas-descripcion">
 							<p class="oferta-titulo">ID de curso: ${curso.ID_curso}</p>
 							<p class = "ofertas-titulo">${curso.DES_titulo }</p>
-							<p class = "ofertas-empresa">Impartido por: <!-- TO-DO cambiar COD_prof por nombre del profesor -->${curso.COD_profesor }</p>
+							<p class = "ofertas-empresa">Impartido por: <!-- TO-DO cambiar COD_prof por nombre del profesor -->${curso.profesor.nombre }</p>
 							<p class = "ofertas-resumen">${curso.DES_descripcion }</p>
 							<p class = "ofertas-tipo-contrato">${curso.horas } hrs.</p>
 							<p class = "ofertas-jornada">${curso.precio_final } euros.</p>
