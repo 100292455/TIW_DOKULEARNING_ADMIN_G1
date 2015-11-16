@@ -5,5 +5,8 @@
         <dependent-module archiveName="TIW_DOKULEARNING_ADMIN_G1-web-1.0.war" deploy-path="/" handle="module:/resource/TIW_DOKULEARNING_ADMIN_G1-web/TIW_DOKULEARNING_ADMIN_G1-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="TIW_DOKULEARNING_ADMIN_G1-model-1.0.jar" deploy-path="/lib" handle="module:/resource/TIW_DOKULEARNING_ADMIN_G1-model/TIW_DOKULEARNING_ADMIN_G1-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>

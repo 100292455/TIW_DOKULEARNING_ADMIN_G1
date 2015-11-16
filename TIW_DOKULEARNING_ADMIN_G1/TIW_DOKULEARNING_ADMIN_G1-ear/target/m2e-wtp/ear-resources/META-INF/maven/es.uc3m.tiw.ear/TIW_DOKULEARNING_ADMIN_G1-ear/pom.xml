@@ -40,6 +40,10 @@
             <artifactId>TIW_DOKULEARNING_ADMIN_G1-ejb</artifactId>
             </ejbModule> -->
             <!-- 4.5.3. Include Web Application Module. -->
+           <!--  <jarModule>
+            <groupId>es.uc3m.tiw.model</groupId>
+          <artifactId>TIW_DOKULEARNING_ADMIN_G1-model</artifactId>
+           </jarModule> -->
             <webModule>
             <groupId>es.uc3m.tiw.web</groupId>
             <artifactId>TIW_DOKULEARNING_ADMIN_G1-web</artifactId>
@@ -70,6 +74,11 @@
   		<version>1.0</version>
   		<type>ejb</type>
   	</dependency> -->
+  	<dependency>
+  		<groupId>es.uc3m.tiw.model</groupId>
+  		<artifactId>TIW_DOKULEARNING_ADMIN_G1-model</artifactId>
+  		<version>1.0</version>
+  	</dependency>
   	<dependency>
   		<groupId>es.uc3m.tiw.web</groupId>
   		<artifactId>TIW_DOKULEARNING_ADMIN_G1-web</artifactId>
