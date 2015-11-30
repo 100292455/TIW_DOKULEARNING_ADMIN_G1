@@ -66,7 +66,7 @@ public class Admin_AdministradorServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(VALIDAR_CURSOS_JSP).forward(request, response);
+		config2.getServletContext().getRequestDispatcher(VALIDAR_CURSOS_JSP).forward(request, response);
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class Admin_AdministradorServlet extends HttpServlet {
 		/* En funcion de lo introducida en "filtro" redirigimos a una pagina jsp u otra */
 		
 		if(filtro.equals("IrMenu")){
-			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
+			config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);
 		}
 		
 		if(filtro.equals("AdministrarCursosPendientes")){
@@ -92,7 +92,7 @@ public class Admin_AdministradorServlet extends HttpServlet {
 			Collection<Curso> cursosSinValidar = curDao.recuperarCursosPorDEstado(0);
 			sesion.setAttribute("cursosValidar", cursosSinValidar);
 				
-			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
+			config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
 		}
 		
 		if(filtro.equals("AdministrarPromociones")){
@@ -103,7 +103,7 @@ public class Admin_AdministradorServlet extends HttpServlet {
 			Collection<Curso> cursos = curDao.buscarTodosLosCursos();
 			sesion.setAttribute("cursos", cursos);
 				
-			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
+			config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
 		}
 		if(filtro.equals("AdministrarCursosDestacados")){
 			pagina = ADMIN_DESTACADOS_JSP;
@@ -113,7 +113,7 @@ public class Admin_AdministradorServlet extends HttpServlet {
 			Collection<Curso> cursosDestacados = curDao.recuperarCursosPorDestacado(0);
 			sesion.setAttribute("cursosDestacados", cursosDestacados);
 				
-			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
+			config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);	
 		}
 	}
 	

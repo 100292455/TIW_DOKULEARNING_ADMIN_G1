@@ -69,8 +69,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return em.createQuery("select u from Usuario u where u.nombre="+nombre, Usuario.class).getSingleResult();
 	}
 	@Override
-	public Usuario buscarPorNombreYpassword(String nombre,String password)throws NoResultException{
-		return em.createQuery("select u from Usuario u where u.nombre='"+nombre+"' and u.password='"+password+"'",Usuario.class).getSingleResult();
+	public Usuario buscarPorEmailYpassword(String email,String clave)throws NoResultException{
+		return em.createQuery("select u from Usuario u where u.email='"+email+"' and u.clave='"+clave+"'",Usuario.class).getSingleResult();
 	}
 	
 	public Collection<Usuario> buscarTodosLosUsuarios(){

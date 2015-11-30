@@ -630,11 +630,11 @@
 		display:inline-block;
 	}
 	
-	#formul5, #formul6, #formul7{
+	#formul5, #formul6, #formul7 #formul10{
 		display:inline-block;
 	}
 	
-	p[id=mens1], p[id=mens2], p[id=mens3], p[id=mens4], p[id=mens5], p[id=mens6], p[id=mens7]{/* Mensajes de alerta */
+	p[id=mens1], p[id=mens2], p[id=mens3], p[id=mens4], p[id=mens5], p[id=mens6], p[id=mens7], p[id=mens10]{/* Mensajes de alerta */
 		border:solid 2px rgb(251,75,77);
 		border-radius: 10px;
 		padding:5px;

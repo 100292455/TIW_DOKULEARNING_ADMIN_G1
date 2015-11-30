@@ -2,6 +2,7 @@ package es.uc3m.tiw.web.controladores;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -64,7 +65,7 @@ public class AltaPromocionesServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher(GESTION_CURSOS_JSP).forward(request, response);
+		config2.getServletContext().getRequestDispatcher(GESTION_CURSOS_JSP).forward(request, response);
 	}
 
 	/**
@@ -72,23 +73,32 @@ public class AltaPromocionesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String nombrePromo = request.getParameter("nombrePromo");
+		//String nombrePromo = request.getParameter("nombrePromo");
+		HttpSession sesion = request.getSession();
+		Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+		//Usuario usuario = new Usuario ( "Miguel", "Solera", 1, "miguel@uc3m.es", "descripcion", "intereses", "565543324", "VISA", 0, "1234");
+		String nombrePromo = "Promo prueba";
 		String precio1 = request.getParameter("precio");
 		String tipo_promocion1 = request.getParameter("tipo_promocion");
-		String fecha_fin = request.getParameter("fecha_fin");
+		String fecha_fin = request.getParameter("datepicker");
+		System.out.println("-----------------------------------------------"+usuario.getNombre());
+		System.out.println("-----------------------------------------------"+nombrePromo);
+		System.out.println("-----------------------------------------------"+precio1);
+		System.out.println("-----------------------------------------------"+tipo_promocion1);
+		System.out.println("-----------------------------------------------"+fecha_fin);
 		/*****/
 		
 		String mensaje ="";
 		String pagina = "";
 		pagina = GESTION_CURSOS_JSP;
-		HttpSession sesion = request.getSession();	
-		ServletContext context = sesion.getServletContext();
-		Promocion p = new Promocion();
+		//Promocion p = new Promocion();
 		String m = comprobarPromocion(nombrePromo, precio1, tipo_promocion1, fecha_fin);
 		if (m .equals(null) || m .equals("")){
 			int precio2 = Integer.parseInt(precio1);
 			int tipo_promocion2 = Integer.parseInt(tipo_promocion1);
-			p = crearPromocion(nombrePromo, precio2, tipo_promocion2, fecha_fin);
+			//Promocion p = crearPromocion(nombrePromo, precio2, tipo_promocion2, fecha_fin,  usuario);
+			Promocion p = new Promocion(nombrePromo, fecha_fin, precio2, tipo_promocion2, usuario);
+			System.out.println("-----------------------------------------------------"+p);
 			pagina = ENTRADA_JSP;
 			try {
 				p=promDao.guardarPromocion(p);
@@ -96,6 +106,32 @@ public class AltaPromocionesServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			for (Curso c : curDao.buscarTodosLosCursos()) {
+				
+				int precioInicial = c.getPrecio_inicial();
+				int descuento = p.getDescuento();
+				int tipoDescuento = p.getTipo_promo();
+				if (tipoDescuento==0) {
+					c.setPrecio_final(precioInicial-descuento);
+					c.setFechaFinDescuento(p.getFecha_fin());
+				}
+				else{
+					
+					int descuentoTotal = (int) (precioInicial-((descuento*0.01)*precioInicial));
+					c.setPrecio_final(descuentoTotal);
+					c.setFechaFinDescuento(p.getFecha_fin());
+				}
+				
+				try {
+					c=curDao.modificarCurso(c);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			
 			Collection<Promocion> promociones = promDao.buscarTodosLosPromociones();
 			sesion.setAttribute("promociones", promociones);
 			sesion.setAttribute("promocion", p);
@@ -104,21 +140,21 @@ public class AltaPromocionesServlet extends HttpServlet {
 			
 			mensaje = m;
 			request.setAttribute("mensaje", mensaje);
-			sesion.setAttribute("promocion", p);
 		}
 			
-			this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
+			config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);
 			
 		
 	}
 
-	private Promocion crearPromocion(String nombrePromo, int precio, int tipo_promocion, String fecha_fin) {
+	private Promocion crearPromocion(String nombrePromo, int precio, int tipo_promocion, String fecha_fin, Usuario profesor) {
 		Promocion p = new Promocion();
 		
 		p.setNombrePromo(nombrePromo);
 		p.setDescuento(precio);
 		p.setTipo_promo(tipo_promocion);
 		p.setFecha_fin(fecha_fin);
+		p.setProfesor(profesor);
 		return p;
 	}
 
@@ -128,7 +164,7 @@ public class AltaPromocionesServlet extends HttpServlet {
 		String m = "";
 		
 		if (nombrePromo.equals("") || precio.equals("") || tipo_promocion.equals("") || fecha_fin.equals("")) {
-			m ="Fallo al crear nuevo cupon. ";
+			m ="Fallo al crear nueva promocion. ";
 		}
 		
 		return m;

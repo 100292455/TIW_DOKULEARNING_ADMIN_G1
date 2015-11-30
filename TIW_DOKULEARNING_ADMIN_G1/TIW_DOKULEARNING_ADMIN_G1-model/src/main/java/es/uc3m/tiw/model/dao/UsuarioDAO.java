@@ -16,8 +16,8 @@ public interface UsuarioDAO {
 	public abstract Usuario recuperarUsuarioPorPK(Long pk);
 
 	public abstract Usuario recuperarUsuarioPorNombre(String nombre);
-
-	public abstract Usuario buscarPorNombreYpassword(String nombre, String password);
+	
+	public abstract Usuario buscarPorEmailYpassword(String email,String clave);
 
 	public abstract Collection<Usuario> buscarTodosLosUsuarios();
 

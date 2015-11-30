@@ -16,9 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.UserTransaction;
 
+import es.uc3m.tiw.model.Promocion;
 import es.uc3m.tiw.model.Usuario;
 import es.uc3m.tiw.model.dao.UsuarioDAO;
 import es.uc3m.tiw.model.dao.UsuarioDAOImpl;
+import es.uc3m.tiw.model.dao.PromocionDAO;
+import es.uc3m.tiw.model.dao.PromocionDAOImpl;
 
 
 /**
@@ -35,18 +38,20 @@ public class LoginServlet extends HttpServlet {
 	private UserTransaction ut;
 	private ServletConfig config2;
 	private UsuarioDAO usDao;
+	private PromocionDAO promDao;
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		config2 = config;
 		usDao = new UsuarioDAOImpl(em, ut);
-		Usuario usuario = new Usuario ( "Miguel", "Solera", 1, "miguel@uc3m.es", "descripcion", "intereses", "565543324", "VISA", 0, "1234");
+		promDao = new PromocionDAOImpl(em, ut);
+		/*Usuario usuario = new Usuario ( "Miguel", "Solera", 1, "miguel@uc3m.es", "descripcion", "intereses", "565543324", "VISA", 0, "1234");
 		try {
 			usuario = usDao.guardarUsuario(usuario);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public void destroy() {
@@ -62,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 				if (salir != null && !salir.equals("")){
 					request.getSession().invalidate();
 				}
-			this.getServletContext().getRequestDispatcher(LOGIN_JSP).forward(request, response);
+			config2.getServletContext().getRequestDispatcher(LOGIN_JSP).forward(request, response);
 			
 	}
 
@@ -79,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		ServletContext context = sesion.getServletContext();
-		Usuario u = usDao.buscarPorNombreYpassword(user, password);
+		Usuario u = usDao.buscarPorEmailYpassword(user, password);
 		
 		if (u != null){
 			pagina = ENTRADA_JSP;
@@ -94,7 +99,9 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("mensaje", mensaje);
 		}
 		
-		this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
+		Collection<Promocion> promociones = promDao.buscarTodosLosPromociones();
+		sesion.setAttribute("promociones", promociones);
+		config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);
 		
 	}
 

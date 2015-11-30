@@ -82,11 +82,11 @@ public class Admin_ValidaCursoServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/* DEVOLVER LOS CURSOS CON TIPO_estado = 1  */
-		Collection<Curso> cursosEstado1 = curDao.recuperarCursosPorDEstado(1);
+		/* DEVOLVER LOS CURSOS CON TIPO_estado = 2  */
+		Collection<Curso> cursosEstado1 = curDao.recuperarCursosPorDEstado(2);
 		sesion.setAttribute("cursosValidar", cursosEstado1);
 		
-		this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
+		config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);
 	}
 
 	/**

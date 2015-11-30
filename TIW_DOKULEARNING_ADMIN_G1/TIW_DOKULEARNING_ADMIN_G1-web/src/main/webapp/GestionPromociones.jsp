@@ -14,6 +14,7 @@
 		<meta name="description" content="Web de cursos en linea">
 		<meta name="author" content="Jorge Garcia">
 		<link href="<c:url value="/admin_css/base.css" />" rel="stylesheet" type="text/css" >
+		<link href="<c:url value="/admin_css/usuario-contenido-curso.css" />" rel="stylesheet" type="text/css" >
 		<link href="<c:url value="/admin_css/empresa-mis-ofertas.css" />" rel="stylesheet" type="text/css" >
 		<link href="<c:url value="http://fonts.googleapis.com/css?family=Ubuntu" />" rel='stylesheet' type='text/css'>
 		<link href="<c:url value="/script/jquery-ui-1.11.2.custom/jquery-ui.css" />" rel="stylesheet">
@@ -42,7 +43,7 @@
 				
 				<div id = "mi-empresa">
 				
-					<input type = "button" name = "actualizar" value = "Añadir promocion" id = "añadir-oferta1" class = "añadir-oferta">
+					<input type = "button"  value = "Anadir Promocion"  class = "anadir-cupon" id="boton-anadir-cupon">
 				
 					<h4>MIS PROMOCIONES</h4>
 					
@@ -78,62 +79,55 @@
 								
 							</li>
 						</c:forEach> 
-						</ul>
-						
-						<input type = "button" name = "actualizar" value = "Añadir promocion" id = "añadir-oferta2" class = "añadir-oferta">
-						
+						</ul>				
 						<c:if test="${ mensaje != null }">
 							<p class="error">${mensaje }</p>
 						</c:if>
 						
-						<div id="añadir">
+					<!-- Crear un cupon nuevo -->
+									 
+						<div id="anadir-cupon">
 
-					        <h2> Añade una nueva Promocion</h2>  
-			
-							<form action="AltaPromociones" method="post">
-							
-					        <!-- Titulo de la promocion -->
+					        <h2> Crear nueva promocion </h2>  
 
-					       	<div id="formul1">  
-					        	<p class="nombre">Nombre de la promocion<span class=aster>*</span>:</p>
-						        <p  id="mens1">No ha especificado el nombre de la Promocion*</p>
-						        <input type="text" name="nombrePromo" id="nombrePromo"/>
-					      	</div>
+							<form action="AltaPromociones" method="post" id ="anadir-cupon-form" onsubmit="return validarcrearcupon();">
+								
+								<div> 
+								<!-- Precio promocion -->
+	
+							       	<div id="formul7">  
+							        	<p class="nombre">Precio de descuento<span class=aster>*</span>:</p>  
+								        <p  id="mens7">No ha especificado precio de descuento*</p>
+								        <input  type="text" name="precio" id="precio" value="0">
+							        </div>		
+							      	
+								 <!-- Formato promocion -->
 
-					        <!-- Precio del descuento -->
-
-					        <div id="formul2">  
-					        	<p class="nombre">Precio de descuento<span class=aster>*</span>:</p>  
-						        <p  id="mens2">No ha especificado el precio de descuento*</p>
-						        <input  type="text" name="precio" id="precio"/>
-					        </div>
-
-					        <!-- Tipo de descuento -->
-
-					        <div id="formul3">  
-						        <p class="nombre">Tipo de promocion<span class=aster>*</span>:</p> 
-						        <select name="tipo_promocion" id="tipo_promocion">
-						        	
-  									<option value="0">Precio Fijo</option>
-  									<option value="1">Porcentaje</option>
-  								</select> 
-					        </div>
-
-					        <!-- Fecha fin promo -->
-
-					        <div id="formul4">  
-					        	<p class="nombre">Fecha final de Promocion<span class=aster>*</span>:</p>  
-						        <p  id="mens4">No ha especificado la fecha final de la promocion*</p>
-								<textarea name="fecha_fin" id="fecha_fin"></textarea>
-					        </div>
-
-							<div id="formul6">  
-					        	<p class="nombre">Recuerde que solo puede haber una promocion activa.<span class=aster>*</span>.</p>  
-					        </div>
-
+							        <div id="formul8">  
+								        <p class="nombre">Formato promocion<span class=aster>*</span>:</p> 
+								        <p  id="mens8">No ha especificado el formato de la promocion*</p>
+								        <select name="tipo_promocion" id="tipo_cupon">
+								        	<option value="-1" selected>Sin especificar</option>
+		  									<option value="0">Fijo</option>
+		  									<option value="1">Porcentaje</option>
+										</select> 
+							        </div>
+					        	</div>
+					        	
+								
+								
+								<!-- Fecha fin de promocion -->
+								
+								
+								<div id="formul9">
+						        	<p class="nombre">Fecha fin de promocion<span class=aster>*</span>.</p>  
+							        <p  id="mens9">No ha especificado la fecha final de la promocion*</p>  
+									<input type="text" name="datepicker" id="datepicker">
+								 </div>
+								 
 					        <!-- Boton aÃ±adir -->
 
-							<input type="submit" id="añadirboton" value="Añadir" />
+							<input type="submit" id="crear-cupon-boton" value="Anadir" />
 							</form>
 					   	</div>
 					</div>
@@ -154,7 +148,7 @@
 	
 			<!--PIE DE PAGINA-->
 
-		<script src ="<c:url value="script/cupones.js" />" type = "text/javascript" ></script>
+		<script src ="<c:url value="script/empresa-mis-ofertas2.js" />" type = "text/javascript" ></script>
 		
 		
 	</body>

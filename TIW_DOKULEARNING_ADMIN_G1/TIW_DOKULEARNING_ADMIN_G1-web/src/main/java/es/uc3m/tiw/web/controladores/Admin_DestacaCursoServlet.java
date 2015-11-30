@@ -84,7 +84,7 @@ public class Admin_DestacaCursoServlet extends HttpServlet {
 		Collection<Curso> cursosSinDestacar = curDao.recuperarCursosPorDestacado(0);
 		sesion.setAttribute("cursosDestacados", cursosSinDestacar);
 		
-		this.getServletContext().getRequestDispatcher(pagina).forward(request, response);
+		config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);
 	}
 
 	/**
