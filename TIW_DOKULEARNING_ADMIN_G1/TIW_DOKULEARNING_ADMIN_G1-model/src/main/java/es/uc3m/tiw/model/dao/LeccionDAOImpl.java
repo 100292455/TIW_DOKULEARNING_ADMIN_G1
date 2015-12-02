@@ -50,10 +50,11 @@ public class LeccionDAOImpl implements LeccionDAO {
 	 * @see es.uc3m.tiw.daos.UsuarioDAO#borrarUsuario(es.uc3m.tiw.dominios.Usuario)
 	 */
 	@Override
-	public void borrarLeccion(Leccion leccion) throws Exception{
+	public Leccion borrarLeccion(Leccion leccion) throws Exception{
 		ut.begin();
 		em.remove(em.merge(leccion));
 		ut.commit();
+		return leccion;
 	}
 	/* (non-Javadoc)
 	 * @see es.uc3m.tiw.daos.UsuarioDAO#recuperarUsuarioPorPK(java.lang.Integer)

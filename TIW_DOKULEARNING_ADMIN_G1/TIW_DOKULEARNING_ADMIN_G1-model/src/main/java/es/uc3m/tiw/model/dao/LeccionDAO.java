@@ -12,7 +12,7 @@ public interface LeccionDAO {
 
 	public abstract Leccion modificarLeccion(Leccion Leccion) throws Exception;
 
-	public abstract void borrarLeccion(Leccion Leccion) throws Exception;
+	public abstract Leccion borrarLeccion(Leccion Leccion) throws Exception;
 
 	public abstract Leccion recuperarLeccionPorPK(int pk);
 
