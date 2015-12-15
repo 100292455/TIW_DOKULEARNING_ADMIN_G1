@@ -2,6 +2,7 @@ package es.uc3m.tiw.model;
 
 import static javax.persistence.GenerationType.AUTO;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="usuario")
-public class Usuario {
+public class Usuario implements Serializable{
 	
 	@Id
  	@GeneratedValue(strategy = AUTO)
@@ -27,10 +28,29 @@ public class Usuario {
 	private String TIPO_medio_cobro;
 	private int TIPO_usuario;
 	private String clave;
-	@OneToMany
-	private List<Curso> cursos_deseados;
+//	@OneToMany
+//	private List<Curso> cursos_deseados;
 	@OneToMany
 	private List<Curso> cursos_matriculados;
+	
+	public Usuario(String nombre, String apellido, int sexo,
+			String email, String descripcion, String intereses, 
+			String telefono, String TIPO_medio_cobro,
+			int TIPO_usuario, String clave,
+			List<Curso> cursos_matriculados) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.sexo = sexo;
+		this.email = email;
+		this.telefono = telefono;
+		this.TIPO_medio_cobro = TIPO_medio_cobro;
+		this.TIPO_usuario = TIPO_usuario;
+		this.clave = clave;
+		this.descripcion = descripcion;
+		this.intereses = intereses;
+		this.cursos_matriculados = cursos_matriculados;
+	}
 	
 	public Usuario(String nombre, String apellido, int sexo,
 			String email, String descripcion, String intereses, 
@@ -59,14 +79,6 @@ public class Usuario {
 
 	public void setCursosMatriculados(List<Curso> Cursos_matriculados) {
 		cursos_matriculados = Cursos_matriculados;
-	}
-	
-	public List<Curso> getCursosDeseados() {
-		return cursos_deseados;
-	}
-
-	public void setCursosDeseados(List<Curso> Cursos_deseados) {
-		cursos_deseados = Cursos_deseados;
 	}
 	
 	public int getID_usuario() {

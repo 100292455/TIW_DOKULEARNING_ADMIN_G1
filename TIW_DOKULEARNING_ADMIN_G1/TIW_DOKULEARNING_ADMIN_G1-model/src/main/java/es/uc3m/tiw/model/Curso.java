@@ -2,9 +2,11 @@ package es.uc3m.tiw.model;
 
 import static javax.persistence.GenerationType.AUTO;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="curso")
-public class Curso {
+public class Curso implements Serializable {
 	
 	@Id
  	@GeneratedValue(strategy = AUTO)
@@ -30,15 +32,25 @@ public class Curso {
 	private Usuario profesor;
 	@OneToMany
 	private List<Usuario> claustro;
+	@OneToMany(cascade=CascadeType.ALL)
+	private Collection<Cupon> cupones;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	private Collection<Seccion> secciones;
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	private Collection<Mensaje> mensaje;
+	
 	int TIPO_estado;
 	String FechaFinDescuento;
+	String tematica;
 	
-	public Curso(int iD_curso, String dES_titulo, String dES_descripcion,
+	public Curso(String dES_titulo, String dES_descripcion,
 			int tIPO_dificultad, int horas, int precio_inicial,
-			int precio_final, int tIPO_destacado, Usuario Profesor,
-			int tIPO_estado, String fechaFinDescuento, List<Usuario> claustro) {
+			int precio_final, int tIPO_destacado, Usuario profesor,
+			List<Usuario> claustro, int tIPO_estado, String fechaFinDescuento,
+			String tematica) {
 		super();
-		ID_curso = iD_curso;
 		DES_titulo = dES_titulo;
 		DES_descripcion = dES_descripcion;
 		TIPO_dificultad = tIPO_dificultad;
@@ -46,45 +58,18 @@ public class Curso {
 		this.precio_inicial = precio_inicial;
 		this.precio_final = precio_final;
 		TIPO_destacado = tIPO_destacado;
-		profesor = Profesor;
-		TIPO_estado = tIPO_estado;
-		this.FechaFinDescuento = fechaFinDescuento;
+		this.profesor = profesor;
 		this.claustro = claustro;
+		TIPO_estado = tIPO_estado;
+		FechaFinDescuento = fechaFinDescuento;
+		this.tematica = tematica;
 	}
+	
+	
 	public Curso() {
 		// TODO Auto-generated constructor stub
 	}
-	public Curso(int iD_curso, 
-			String dES_titulo, 
-			String dES_descripcion, 
-			int tIPO_dificultad, 
-			int horas, 
-			int precio_inicial, 
-			int precio_final,	
-			int tIPO_destacado,	
-			Usuario profesor, 
-			int tIPO_estado, List<Usuario> claustro) {
-		super();
-		this.ID_curso = iD_curso;
-		this.DES_titulo = dES_titulo;
-		this.DES_descripcion = dES_descripcion;
-		this.TIPO_dificultad = tIPO_dificultad;
-		this.horas = horas;
-		this.precio_inicial = precio_inicial;
-		this.precio_final = precio_final;
-		this.TIPO_destacado = tIPO_destacado;
-		this.profesor = profesor;
-		this.TIPO_estado = tIPO_estado;
-		this.claustro = claustro;
-	}
-	public Curso(String titulo, String descripcion, int dificultad, int horas, int precio_inicial) {
-		super();
-		this.DES_titulo = titulo;
-		this.DES_descripcion = descripcion;
-		this.TIPO_dificultad = dificultad;
-		this.horas = horas;
-		this.precio_inicial = precio_inicial;
-	}
+
 	public List<Usuario> getClaustro() {
 		return claustro;
 	}
@@ -157,6 +142,43 @@ public class Curso {
 	public void setTIPO_estado(int tIPO_estado) {
 		TIPO_estado = tIPO_estado;
 	}
+
+
+	public String getTematica() {
+		return tematica;
+	}
+
+
+	public void setTematica(String tematica) {
+		this.tematica = tematica;
+	}
 	
+	public Collection<Cupon> getCupones() {
+		return cupones;
+	}
+
+
+	public void setCupones(Collection<Cupon> cupones) {
+		this.cupones = cupones;
+	}
+	
+	public Collection<Seccion> getSecciones() {
+		return secciones;
+	}
+
+
+	public void setSecciones(Collection<Seccion> secciones) {
+		this.secciones = secciones;
+	}
+
+
+	public Collection<Mensaje> getMensaje() {
+		return mensaje;
+	}
+
+
+	public void setMensaje(Collection<Mensaje> mensaje) {
+		this.mensaje = mensaje;
+	}
 	
 }

@@ -8,6 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * Este filtro intercepta cualquier peticion que vaya a la pagina listado.jsp y comprueba que el usuario se haya autenticado con un token en sesion, en caso contrario le devuelve a la pagina de login.jsp
  * @author David Palomar
  */
-//@WebFilter( urlPatterns = { "/index.jsp" })
+@WebFilter( urlPatterns = { "/index.jsp" })
 public class LoginFilter implements Filter {
 
 

@@ -4,9 +4,12 @@
  		<jta-data-source>jdbc/tiw</jta-data-source>
  		<class>es.uc3m.tiw.model.Cupon</class>
  		<class>es.uc3m.tiw.model.Curso</class>
+ 		<class>es.uc3m.tiw.model.Deseo</class>
  		<class>es.uc3m.tiw.model.Leccion</class>
  		<class>es.uc3m.tiw.model.Logro</class>
  		<class>es.uc3m.tiw.model.Matricula</class>
+ 		<class>es.uc3m.tiw.model.Mensaje</class>
+ 		<class>es.uc3m.tiw.model.Pedido</class>
  		<class>es.uc3m.tiw.model.Promocion</class>
  		<class>es.uc3m.tiw.model.Seccion</class>
  		<class>es.uc3m.tiw.model.Usuario</class>

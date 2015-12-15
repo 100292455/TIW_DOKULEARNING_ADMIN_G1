@@ -65,6 +65,16 @@
 						</button>
 					</div>
 				</form>
+				<form action="Administracion" method="get">				
+					<div class="AceptarNuevo">
+						<input type="hidden" name="filtro" value="Conciliacion">
+						<button type="submit">
+							<div id="IrConciliacion" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
+							Conciliar Pagos
+							</div>
+						</button>
+					</div>
+				</form>
 				<!-- Form para desonectarse de la herramienta de administracion -->
 				<form action="Admin_DesconectaLogin" method="post">
 					<div style="float: left; width: 33.5%; margin-top: 14px; margin-bottom: 14px;">

@@ -67,12 +67,21 @@ public class MatriculaDAOImpl implements MatriculaDAO {
 	 * @see es.uc3m.tiw.daos.UsuarioDAO#recuperarUsuarioPorNombre(java.lang.String)
 	 */
 	@Override
-	public Matricula recuperarMatriculaPorAlumnoYCurso(Usuario alumno, Curso curso) {
-		return em.createQuery("select m from Matricula m where m.alumno="+alumno+"' and m.curso='"+curso+"'",Matricula.class).getSingleResult();
+	public Collection<Matricula> recuperarMatriculaPorAlumnoYCurso(int id_usuario, int id_curso) {
+		return em.createQuery("select m from Matricula m where m.alumno.ID_usuario="+id_usuario+" and m.curso.ID_curso="+id_curso,Matricula.class).getResultList();
+	}
+	
+	@Override
+	public Collection<Matricula> recuperarMatriculaPorAlumno(int id_usuario) {
+		return em.createQuery("select m from Matricula m where m.alumno.ID_usuario="+id_usuario, Matricula.class).getResultList();
 	}
 	
 	public Collection<Matricula> buscarTodosLosMatriculas(){
 		return em.createQuery("select m from Matricula m",Matricula.class).getResultList();
+	}	
+		
+	public Collection<Matricula> recuperarMatriculaPorCurso(int id_curso) {
+			return em.createQuery("select m from Matricula m where m.curso.ID_curso="+id_curso, Matricula.class).getResultList();
+		}
 	}
 	
-}

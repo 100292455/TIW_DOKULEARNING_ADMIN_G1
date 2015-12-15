@@ -2,10 +2,14 @@ package es.uc3m.tiw.model;
 
 import static javax.persistence.GenerationType.AUTO;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +22,9 @@ public class Seccion {
 	@ManyToOne
 	Curso curso;
 	String nombre;
-	
+	@OneToMany(cascade=CascadeType.ALL)
+	private Collection<Leccion> lecciones;
+
 	public Seccion() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -48,6 +54,14 @@ public class Seccion {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public Collection<Leccion> getLecciones() {
+		return lecciones;
+	}
+
+	public void setLecciones(Collection<Leccion> lecciones) {
+		this.lecciones = lecciones;
 	}
 	
 }

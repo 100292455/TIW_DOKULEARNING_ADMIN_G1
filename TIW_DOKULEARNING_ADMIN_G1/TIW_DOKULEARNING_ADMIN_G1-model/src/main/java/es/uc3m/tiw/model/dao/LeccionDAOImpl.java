@@ -50,11 +50,11 @@ public class LeccionDAOImpl implements LeccionDAO {
 	 * @see es.uc3m.tiw.daos.UsuarioDAO#borrarUsuario(es.uc3m.tiw.dominios.Usuario)
 	 */
 	@Override
-	public Leccion borrarLeccion(Leccion leccion) throws Exception{
+	public void borrarLeccion(Leccion leccion) throws Exception{
 		ut.begin();
 		em.remove(em.merge(leccion));
 		ut.commit();
-		return leccion;
+
 	}
 	/* (non-Javadoc)
 	 * @see es.uc3m.tiw.daos.UsuarioDAO#recuperarUsuarioPorPK(java.lang.Integer)
@@ -71,8 +71,8 @@ public class LeccionDAOImpl implements LeccionDAO {
 		return em.createQuery("select l from Leccion l where u.nombre="+nombre, Leccion.class).getSingleResult();
 	}
 	@Override
-	public Collection<Leccion> recuperarLeccionesPorSeccion(Seccion seccion)throws NoResultException{
-		return em.createQuery("select l from Leccion l where l.seccion='"+seccion, Leccion.class).getResultList();
+	public Collection<Leccion> recuperarLeccionesPorSeccion(int id_seccion)throws NoResultException{
+		return em.createQuery("select l from Leccion l where l.seccion.id_seccion="+id_seccion, Leccion.class).getResultList();
 	}
 	
 	public Collection<Leccion> buscarTodosLosLecciones(){

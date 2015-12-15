@@ -17,8 +17,12 @@ public interface MatriculaDAO {
 
 	public abstract Matricula recuperarMatriculaPorPK(Long pk);
 
-	public abstract Matricula recuperarMatriculaPorAlumnoYCurso(Usuario alumno, Curso curso);
+	public abstract Collection<Matricula> recuperarMatriculaPorAlumnoYCurso(int id_alumno, int id_curso);
 
 	public abstract Collection<Matricula> buscarTodosLosMatriculas();
+
+	public abstract Collection<Matricula> recuperarMatriculaPorAlumno(int id_usuario);
+	
+	public abstract Collection<Matricula> recuperarMatriculaPorCurso(int id_curso);
 
 }

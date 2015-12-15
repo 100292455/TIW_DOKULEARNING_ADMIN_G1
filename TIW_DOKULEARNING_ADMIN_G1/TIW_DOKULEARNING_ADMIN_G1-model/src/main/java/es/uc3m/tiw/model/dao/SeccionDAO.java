@@ -18,10 +18,10 @@ public interface SeccionDAO {
 
 	public abstract Seccion recuperarSeccionPorNombre(String nombre);
 
-	public abstract Seccion recuperarSeccionPorCurso(Curso curso);
+	public abstract Seccion recuperarSeccionPorCurso(int id_curso);
 
 	public abstract Collection<Seccion> buscarTodosLosSecciones();
 
-	public abstract Collection<Seccion> recuperarSeccionesPorCurso(Curso curso);
+	public abstract Collection<Seccion> recuperarSeccionesPorCurso(int id_curso);
 
 }

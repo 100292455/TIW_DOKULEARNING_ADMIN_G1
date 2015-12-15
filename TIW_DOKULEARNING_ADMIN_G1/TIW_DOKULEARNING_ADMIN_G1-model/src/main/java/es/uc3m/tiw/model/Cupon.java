@@ -1,13 +1,18 @@
 package es.uc3m.tiw.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import static javax.persistence.GenerationType.AUTO;
 
+import javax.persistence.Table;
+
 @Entity
+@Table(name="cupon")
 public class Cupon {
 
 	@Id
@@ -20,33 +25,56 @@ public class Cupon {
 	private int TIPO_cupon;
 	@OneToOne
 	private Curso curso;
+	private String nombreCupon;
 	
 	
 	
 	public Cupon() {
 		super();
 	}
-	public Cupon(int id_cupon, String fecha_fin, Usuario profesor,
-			int descuento, int tipo_cupon, Curso curso) {
+
+	
+	public Cupon(String fecha_vto_cupon, Usuario profesor, int descuento,
+			int tIPO_cupon, Curso curso, String nombreCupon) {
 		super();
-		this.ID_cupon = id_cupon;
-		this.fecha_vto_cupon = fecha_fin;
+		this.fecha_vto_cupon = fecha_vto_cupon;
 		this.profesor = profesor;
 		this.descuento = descuento;
-		this.TIPO_cupon = tipo_cupon;
+		TIPO_cupon = tIPO_cupon;
 		this.curso = curso;
+		this.nombreCupon = nombreCupon;
 	}
-	public int getId_cupon() {
+
+
+	public String getNombreCupon() {
+		return nombreCupon;
+	}
+
+
+	public void setNombreCupon(String nombreCupon) {
+		this.nombreCupon = nombreCupon;
+	}
+
+
+	public int getID_cupon() {
 		return ID_cupon;
 	}
-	public void setId_cupon(int id_cupon) {
-		this.ID_cupon = id_cupon;
+	public void setID_cupon(int iD_cupon) {
+		ID_cupon = iD_cupon;
 	}
-	public String getFecha_fin() {
+	public String getFecha_vto_cupon() {
 		return fecha_vto_cupon;
 	}
-	public void setFecha_fin(String fecha_fin) {
-		this.fecha_vto_cupon = fecha_fin;
+	public void setFecha_vto_cupon(String fecha_vto_cupon) {
+		this.fecha_vto_cupon = fecha_vto_cupon;
+	}
+
+	
+	public int getTIPO_cupon() {
+		return TIPO_cupon;
+	}
+	public void setTIPO_cupon(int TIPO_cupon) {
+		TIPO_cupon = TIPO_cupon;
 	}
 	public Usuario getProfesor() {
 		return profesor;
@@ -60,12 +88,7 @@ public class Cupon {
 	public void setDescuento(int descuento) {
 		this.descuento = descuento;
 	}
-	public int getTipo_cupon() {
-		return TIPO_cupon;
-	}
-	public void setTipo_cupon(int tipo_cupon) {
-		this.TIPO_cupon = tipo_cupon;
-	}
+	
 	public Curso getCurso() {
 		return curso;
 	}

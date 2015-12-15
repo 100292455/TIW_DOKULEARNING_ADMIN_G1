@@ -12,13 +12,13 @@ public interface LeccionDAO {
 
 	public abstract Leccion modificarLeccion(Leccion Leccion) throws Exception;
 
-	public abstract Leccion borrarLeccion(Leccion Leccion) throws Exception;
+	public abstract void borrarLeccion(Leccion Leccion) throws Exception;
 
 	public abstract Leccion recuperarLeccionPorPK(int pk);
 
 	public abstract Leccion recuperarLeccionPorNombre(String nombre);
 	
-	public abstract Collection<Leccion> recuperarLeccionesPorSeccion(Seccion seccion);
+	public abstract Collection<Leccion> recuperarLeccionesPorSeccion(int id_seccion);
 
 	public abstract Collection<Leccion> buscarTodosLosLecciones();
 

@@ -2,11 +2,14 @@ package es.uc3m.tiw.model.dao;
 
 import java.util.Collection;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 
 import es.uc3m.tiw.model.Cupon;
+import es.uc3m.tiw.model.Curso;
 
 public class CuponDAOImpl implements CuponDAO {
 	
@@ -79,6 +82,13 @@ All statements within begin and commit execute in the transaction scope
 	
 	public Collection<Cupon> buscarTodosLosCupones(){
 		return em.createQuery("select c from Cupon c",Cupon.class).getResultList();
+	}
+	
+	@Override
+	public Collection<Cupon> recuperarCuponPorCurso(Curso curso) {
+		Query query = em.createQuery("select c from Cupon c where c.curso=:curso", Cupon.class);
+		query.setParameter("curso", curso);
+		return query.getResultList();
 	}
 	
 }

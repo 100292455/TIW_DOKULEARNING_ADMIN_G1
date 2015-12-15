@@ -81,11 +81,6 @@ public class AltaPromocionesServlet extends HttpServlet {
 		String precio1 = request.getParameter("precio");
 		String tipo_promocion1 = request.getParameter("tipo_promocion");
 		String fecha_fin = request.getParameter("datepicker");
-		System.out.println("-----------------------------------------------"+usuario.getNombre());
-		System.out.println("-----------------------------------------------"+nombrePromo);
-		System.out.println("-----------------------------------------------"+precio1);
-		System.out.println("-----------------------------------------------"+tipo_promocion1);
-		System.out.println("-----------------------------------------------"+fecha_fin);
 		/*****/
 		
 		String mensaje ="";
@@ -93,34 +88,69 @@ public class AltaPromocionesServlet extends HttpServlet {
 		pagina = GESTION_CURSOS_JSP;
 		//Promocion p = new Promocion();
 		String m = comprobarPromocion(nombrePromo, precio1, tipo_promocion1, fecha_fin);
-		if (m .equals(null) || m .equals("")){
+		if(promDao.buscarTodosLosPromociones().size()!=0){
+			mensaje = "Error al crear promocion. Ya existe una promocion.";
+			sesion.setAttribute("mensajePromociones", mensaje);
+		}
+		//Si la promocion a crear presenta todos los campos
+		else if (m .equals(null) || m .equals("")){
 			int precio2 = Integer.parseInt(precio1);
 			int tipo_promocion2 = Integer.parseInt(tipo_promocion1);
 			//Promocion p = crearPromocion(nombrePromo, precio2, tipo_promocion2, fecha_fin,  usuario);
+			//Creamos nueva promocion
 			Promocion p = new Promocion(nombrePromo, fecha_fin, precio2, tipo_promocion2, usuario);
-			System.out.println("-----------------------------------------------------"+p);
 			pagina = ENTRADA_JSP;
-			try {
-				p=promDao.guardarPromocion(p);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			
 			for (Curso c : curDao.buscarTodosLosCursos()) {
 				
 				int precioInicial = c.getPrecio_inicial();
 				int descuento = p.getDescuento();
 				int tipoDescuento = p.getTipo_promo();
+				
+				
 				if (tipoDescuento==0) {
-					c.setPrecio_final(precioInicial-descuento);
-					c.setFechaFinDescuento(p.getFecha_fin());
-				}
-				else{
+					if(descuento>0.3*precioInicial){
+						m="Error al crear promocion. El valor de la promocion es mayor que los beneficios que el profesor obtendria en el curso "+c.getDES_titulo();
+						sesion.setAttribute("mensajePromociones", m);
+						break;
+					}
 					
-					int descuentoTotal = (int) (precioInicial-((descuento*0.01)*precioInicial));
-					c.setPrecio_final(descuentoTotal);
-					c.setFechaFinDescuento(p.getFecha_fin());
+				
+					else {
+						c.setPrecio_final(precioInicial-descuento);
+						c.setFechaFinDescuento(p.getFecha_fin());
+						try {
+							p=promDao.guardarPromocion(p);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+						e.printStackTrace();
+						}
+					}
+				}
+				
+				//Tipo promocion %
+				else{
+					if((descuento*0.01)*precioInicial>0.7*precioInicial){
+						m="Error al crear la promocion. El valor de la promocion es mayor que los beneficios que el profesor obtendria en el curso "+c.getDES_titulo();
+						sesion.setAttribute("mensajePromociones", m);
+						break;
+					}
+					
+					else {
+						int descuentoTotal = (int) (precioInicial-((descuento*0.01)*precioInicial));
+						c.setPrecio_final(descuentoTotal);
+						c.setFechaFinDescuento(p.getFecha_fin());
+						try {
+							p=promDao.guardarPromocion(p);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+					
+					
 				}
 				
 				try {
@@ -129,6 +159,8 @@ public class AltaPromocionesServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				
 			}
 			
 			
@@ -139,7 +171,7 @@ public class AltaPromocionesServlet extends HttpServlet {
 		}else{
 			
 			mensaje = m;
-			request.setAttribute("mensaje", mensaje);
+			sesion.setAttribute("mensajePromociones", mensaje);
 		}
 			
 			config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);

@@ -71,13 +71,13 @@ public class SeccionDAOImpl implements SeccionDAO {
 	}
 	
 	@Override
-	public Seccion recuperarSeccionPorCurso(Curso curso) {
-		return em.createQuery("select s from Seccion s where s.curso="+curso, Seccion.class).getSingleResult();
+	public Seccion recuperarSeccionPorCurso(int id_curso) {
+		return em.createQuery("select s from Seccion s where s.curso.ID_curso="+id_curso, Seccion.class).getSingleResult();
 	}
 	
 	@Override
-	public Collection<Seccion> recuperarSeccionesPorCurso(Curso curso) {
-		return em.createQuery("select s from Seccion s where s.curso="+curso, Seccion.class).getResultList();
+	public Collection<Seccion> recuperarSeccionesPorCurso(int id_curso) {
+		return em.createQuery("select s from Seccion s where s.curso.ID_curso="+id_curso, Seccion.class).getResultList();
 	}
 	
 	public Collection<Seccion> buscarTodosLosSecciones(){
