@@ -26,6 +26,12 @@
            
             <scope>provided</scope>
         </dependency>
+        <dependency>
+        	<groupId>es.uc3m.tiw.model</groupId>
+        	<artifactId>TIW_DOKULEARNING_ADMIN_G1-model</artifactId>
+        	<scope>provided</scope>
+        	<version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

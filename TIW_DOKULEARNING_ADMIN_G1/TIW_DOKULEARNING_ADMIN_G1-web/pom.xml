@@ -23,7 +23,6 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
-          
             <scope>provided</scope>
         </dependency>
          <dependency>
@@ -37,6 +36,18 @@
 			<version>2.13</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+        	<groupId>es.uc3m.tiw.ejb</groupId>
+        	<artifactId>TIW_DOKULEARNING_ADMIN_G1-ejb</artifactId>
+        	<scope>provided</scope>
+        	<version>1.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>es.uc3m.tiw.model</groupId>
+        	<artifactId>TIW_DOKULEARNING_ADMIN_G1-model</artifactId>
+        	<scope>provided</scope>
+        	<version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

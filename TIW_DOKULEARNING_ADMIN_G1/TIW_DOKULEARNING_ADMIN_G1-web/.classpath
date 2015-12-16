@@ -24,5 +24,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/TIW_DOKULEARNING_ADMIN_G1-model"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TIW_DOKULEARNING_ADMIN_G1-ejb"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TIW_DOKULEARNING_ADMIN_G1-util"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
