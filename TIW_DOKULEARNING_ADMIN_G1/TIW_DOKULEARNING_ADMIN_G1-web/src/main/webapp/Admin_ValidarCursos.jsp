@@ -27,7 +27,12 @@
 			
 			<header>
 			
-				<div class="AreaPersonal" style="color:white;">Cursos Pendientes de Validar</div>
+				<div class="AreaPersonal">Administrar Promociones</div>
+				
+				<form action="Administracion" method="post">
+						<input type="hidden" name="filtro" value="IrMenu">
+						<input type="submit" id="volver-menu" value="Volver al menu" />
+				</form>
 			
 			</header>
 			
@@ -35,6 +40,10 @@
 			<!--CUERPO DE LA PAGINA-->
 	
 			<section> 
+			
+			<div id="lista-destacado">
+				<h4>CURSOS DESTACADOS</h4>
+			
 			<c:choose>
 				<c:when test="${empty cursosValidar }">
 					<!-- cursosValidar es un atributo metido en el request por eso no es necesario 
@@ -67,25 +76,21 @@
 							</c:choose>
 						</div>
 						
-						<div class = "ofertas-edicion">
-							<a style="color:white; font-weight:bold"href="ValidaCurso?IdCurso=${curso.ID_curso}">VALIDAR</a>
-						</div>
+						
+
+						
+						<a href="ValidaCurso?IdCurso=${curso.ID_curso}" class = "ofertas-edicion-destacado">
+							<img src="images/validar.png" alt="Error en la imagen">
+							<p>Validar</p>
+						</a>
 								
 					</li>
 				</ul>
 				</c:forEach> 
 				</c:otherwise>
 			</c:choose>
-				<form action="Administracion" method="post">
-					<div style="float: left; width: 33.5%; margin-top: 14px; margin-bottom: 14px;">
-						<input type="hidden" name="filtro" value="IrMenu">
-						<button type="submit">
-							<div id="menu" class="BotonBaseDoku" style="float: left; margin-left: 6%; top: 0px; border: 4px double red !important">
-							Volver al Menu
-							</div>
-						</button>
-					</div>
-				</form>
+				</div>
+				
 			
 			</section>		
 		

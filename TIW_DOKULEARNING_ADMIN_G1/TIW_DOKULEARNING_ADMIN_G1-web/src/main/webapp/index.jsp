@@ -13,7 +13,7 @@
 		<meta name="keywords" content="e-learning, cursos">
 		<meta name="description" content="Adminsitracion de Web de cursos en linea">
 		<meta name="author" content="Miguel Solera Martin">
-		<link href="<c:url value="/admin_css/base.css" />" rel="stylesheet" type="text/css" >
+		<link href="<c:url value="/admin_css/empresa-mis-ofertas.css" />" rel="stylesheet" type="text/css" >
 		
 	</head>
 	
@@ -24,8 +24,8 @@
 			
 			<header>
 			
-				<div class="AreaPersonal">Administracion DOKULEARNING</div>
-			
+				<div class="AreaPersonal">Administrar DOKULEARNING</div>
+							
 			</header>
 			
 
@@ -35,54 +35,35 @@
 			
 			<!-- pasamos al servlet Admin_Administrador por request el filtro para poder controlar a donde redirige cada boton -->
 				
-				<form action="Administracion" method="post">				
-					<div class="AceptarNuevo">	
+			<div id="admin-list">	
+				
+				<form action="Administracion" method="post">
 						<input type="hidden" name="filtro" value="AdministrarCursosPendientes">
-						<button type="submit">
-							<div id="IrAdministrarCursosPendientes" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
-							Administrar Cursos Pendientes de Validar
-							</div>
-						</button>
-					</div>
+						<input type="submit" id="volver-validar" value="Administrar Cursos Pendientes de Validar" />
 				</form>
-				<form action="Administracion" method="post">				
-					<div class="AceptarNuevo">
+				
+				<form action="Administracion" method="post">
 						<input type="hidden" name="filtro" value="AdministrarPromociones">
-						<button type="submit">
-							<div id="IrAdministrarPromociones" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
-							Administrar Promociones
-							</div>
-						</button>
-					</div>
+						<input type="submit" id="volver-promocion" value="Administrar Promociones" />
 				</form>
-				<form action="Administracion" method="post">				
-					<div class="AceptarNuevo">
+				
+				<form action="Administracion" method="post">
 						<input type="hidden" name="filtro" value="AdministrarCursosDestacados">
-						<button type="submit">
-							<div id="IrAdministrarCursosDestacados" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
-							Administrar Cursos Destacados
-							</div>
-						</button>
-					</div>
+						<input type="submit" id="volver-destacado" value="Administrar Cursos Destacados" />
 				</form>
-				<form action="Administracion" method="get">				
-					<div class="AceptarNuevo">
+				
+				<form action="Administracion" method="get">
 						<input type="hidden" name="filtro" value="Conciliacion">
-						<button type="submit">
-							<div id="IrConciliacion" style="height:auto;margin-top:10%;" class="BotonBaseDoku">
-							Conciliar Pagos
-							</div>
-						</button>
-					</div>
+						<input type="submit" id="volver-conciliacion" value="Conciliar" />
 				</form>
+				
 				<!-- Form para desonectarse de la herramienta de administracion -->
+
 				<form action="Admin_DesconectaLogin" method="post">
-					<div style="float: left; width: 33.5%; margin-top: 14px; margin-bottom: 14px;">
-						
-							<a href= "Admin_Login.jsp?accion=salir">Salir</a>
-						
-					</div>
+						<a href= "Admin_Login.jsp?accion=salir" id="volver-salir">Salir</a>
 				</form>
+			</div>	
+			
 			</section>		
 		
 	</body>

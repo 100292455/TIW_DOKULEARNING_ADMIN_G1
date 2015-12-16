@@ -33,7 +33,12 @@
 			
 			<header>
 			
-				<div class="AreaPersonal" style="color:white;">Administrar Promociones</div>
+				<div class="AreaPersonal">Administrar Promociones</div>
+				
+				<form action="Administracion" method="post">
+						<input type="hidden" name="filtro" value="IrMenu">
+						<input type="submit" id="volver-menu" value="Volver al menu" />
+				</form>
 			
 			</header>
 			
@@ -44,11 +49,10 @@
 				
 				<div id = "mi-empresa">
 				
-					<input type = "button"  value = "Anadir Promocion"  class = "anadir-cupon" id="boton-anadir-cupon">
 				
 					<h4>MIS PROMOCIONES</h4>
 					
-					
+					<input type = "button"  value = "Anadir Promocion"  id="boton-anadir-cupon">
 					
 					<div id = "ofertas">
 				 		<c:if test="${empty sessionScope.promociones }">
@@ -68,24 +72,23 @@
 						
 						<ul>
 					<c:forEach items="${promociones }" var="promocion"> 	
-							<li id = "oferta-ejemplo">
+							<li class = "oferta-ejemplo">
 								<div class = "ofertas-descripcion">
 									<p class = "ofertas-titulo">ID Promocion: ${promocion.id_promo }</p>
 									<c:choose>
 										<c:when test="${promocion.tipo_promo == 0 }">
-											<p class = "ofertas-titulo">Descuento Fijo: ${promocion.descuento }</p>
+											<p class = "ofertas-empresa">Descuento: ${promocion.descuento }€ descuento</p>
 											
 										</c:when>
 										<c:otherwise>
-											<p class = "ofertas-titulo">Descuento Porcentaje: ${promocion.descuento }% de descuento</p>
+											<p class = "ofertas-empresa">Descuento: ${promocion.descuento }% de descuento</p>
 										</c:otherwise>
 									</c:choose>
 									
-									<p class = "ofertas-titulo">${promocion.fecha_fin } fin de la promocion.</p>
+									<p class = "ofertas-empresa">${promocion.fecha_fin } fin de la promocion.</p>
 								</div>
 								<div class = "ofertas-edicion">
-							    	<img class="eliminar-icon" src="images/trash.png" alt="Error en la imagen">
-							    	<p class = "numero-seguidores"><a  href="BajaPromociones?IdPromocion=${promocion.id_promo}">Eliminar promocion.</a></p>
+							    	<a  href="BajaPromociones?IdPromocion=${promocion.id_promo}"><img class="eliminar-icon" src="images/trash.png" alt="Error en la imagen"></a>
 						       	</div>
 							</li>
 						</c:forEach> 
@@ -138,16 +141,7 @@
 							</form>
 					   	</div>
 					</div>
-				<form action="Administracion" method="post">
-					<div style="float: left; width: 33.5%; margin-top: 14px; margin-bottom: 14px;">
-						<input type="hidden" name="filtro" value="IrMenu">
-						<button type="submit">
-							<div id="menu" class="BotonBaseDoku" style="float: left; margin-left: 6%; top: 0px; border: 4px double red !important">
-							Volver al Menu
-							</div>
-						</button>
-					</div>
-				</form>
+				
 				</div>
 				
 			</section>

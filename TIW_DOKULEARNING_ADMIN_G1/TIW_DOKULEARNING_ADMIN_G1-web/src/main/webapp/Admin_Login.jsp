@@ -13,7 +13,7 @@
 		<meta name="keywords" content="e-learning, cursos">
 		<meta name="description" content="Adminsitracion de Web de cursos en linea">
 		<meta name="author" content="Miguel Solera Martin">
-		<link href="<c:url value="/admin_css/base.css" />" rel="stylesheet" type="text/css" >
+		<link href="<c:url value="/admin_css/empresa-mis-ofertas.css" />" rel="stylesheet" type="text/css" >
 		<style type="text/css">
 			.error {color: red;}
 		</style>
@@ -35,12 +35,12 @@
 	
 			<section> 
 				
-				<div style="float: left; margin-top: 50px; margin-left: 300px; border: 1px double">
+				<div id="admin-list">
 				
 				<!-- Form que llama a login_servlet para autorizar al usuario en la herramienta de administraicon -->
 				
 					<form method = "post" action = "LoginServlet">
-						<div style="float: left; margin-right: 20px; margin-left: 20px; width: 160px">
+					
 							<c:choose>
 							<c:when test="${not empty mensajeLogin }">
 								<p class="error">${mensajeLogin }</p>
@@ -51,14 +51,12 @@
 						</c:choose>
 							<p>Iniciar sesion</p>
 							
-							<input type="text" name ="usuariologin" id="UsuarioLogin" style="margin-top: 20px; margin-bottom: 20px; width: 150px"
-				placeholder="Usuario"> 
-							<input type="password" name = "passwordlogin" id="ContraseniaLogin" style="margin-bottom: 20px; width: 150px"
-				placeholder="Contraseña">
-						</div>
-						<div style="float: left; margin-right: 20px; margin-top: 38px;">
+							<input type="text" name ="usuariologin" id="UsuarioLogin" placeholder="Usuario"> 
+							<br>
+							<input type="password" name = "passwordlogin" id="ContraseniaLogin"  placeholder="Contraseña">
+							<br>
 							<input type="submit" id="AccesoLogin" value="Acceder"/>
-						</div>
+						
 					</form>
 			</div>
 
