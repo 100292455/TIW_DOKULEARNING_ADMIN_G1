@@ -2,6 +2,7 @@ package es.uc3m.tiw.web.controladores;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -87,21 +88,34 @@ public class LoginServlet extends HttpServlet {
 		pagina = LOGIN_JSP;
 
 		HttpSession sesion = request.getSession();
-		Usuario u = usDao.buscarPorEmailYpassword(user, password);
-
-		if (u.getTipo_usuario() == 2){
-			pagina = ENTRADA_JSP;
-			Collection<Usuario> usuarios = usDao.buscarTodosLosUsuarios();
-			sesion.setAttribute("usuarios", usuarios);
-			sesion.setAttribute("usuario", u);
-			sesion.setAttribute("acceso", "ok");
-		}
-
-		else {
-			mensaje = "Usuario sin permisos de administrador";
+		
+		Collection<Usuario> u = usDao.buscarPorEmail(user);
+		if (u.isEmpty()) {
+			mensaje = "No existen usuario registrados con este mail";
 			request.setAttribute("mensajeLogin", mensaje);
 		}
+		else {
+			
+			for (Usuario usuario : u) {
+				
+				if (usuario.getTipo_usuario() == 2){
+					pagina = ENTRADA_JSP;
+					Collection<Usuario> usuarios = usDao.buscarTodosLosUsuarios();
+					sesion.setAttribute("usuarios", u);
+					sesion.setAttribute("usuario", usuario);
+					sesion.setAttribute("mensajePromociones", "");
+					sesion.setAttribute("acceso", "ok");
+				}
 
+				else {
+					mensaje = "Usuario sin permisos de administrador";
+					request.setAttribute("mensajeLogin", mensaje);
+				}
+
+			}
+			
+		}
+		
 		Collection<Promocion> promociones = promDao.buscarTodosLosPromociones();
 		sesion.setAttribute("promociones", promociones);
 		config2.getServletContext().getRequestDispatcher(pagina).forward(request, response);

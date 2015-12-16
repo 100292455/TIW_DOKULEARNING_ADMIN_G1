@@ -70,14 +70,14 @@
 					<c:forEach items="${promociones }" var="promocion"> 	
 							<li id = "oferta-ejemplo">
 								<div class = "ofertas-descripcion">
-									<p class = "ofertas-titulo">Nombre: ${promocion.nombrePromo }</p>
+									<p class = "ofertas-titulo">ID Promocion: ${promocion.id_promo }</p>
 									<c:choose>
 										<c:when test="${promocion.tipo_promo == 0 }">
-											<p class = "ofertas-titulo">Descuento Fijo: ${promocion.descuento }% descuento</p>
+											<p class = "ofertas-titulo">Descuento Fijo: ${promocion.descuento }</p>
 											
 										</c:when>
 										<c:otherwise>
-											<p class = "ofertas-titulo">Descuento Porcentajes: ${promocion.descuento }% de descuento</p>
+											<p class = "ofertas-titulo">Descuento Porcentaje: ${promocion.descuento }% de descuento</p>
 										</c:otherwise>
 									</c:choose>
 									

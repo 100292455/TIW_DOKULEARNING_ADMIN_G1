@@ -92,16 +92,16 @@ public class AltaPromocionesServlet extends HttpServlet {
 			mensaje = "Error al crear promocion. Ya existe una promocion.";
 			sesion.setAttribute("mensajePromociones", mensaje);
 		}
-		//Si la promocion a crear presenta todos los campos
-		else if (m .equals(null) || m .equals("")){
+		//Si la promocion a crear presenta todos los campos y no hay otra en el sistema
+		else if (m==null || m.equals("")){
 			int precio2 = Integer.parseInt(precio1);
 			int tipo_promocion2 = Integer.parseInt(tipo_promocion1);
-			//Promocion p = crearPromocion(nombrePromo, precio2, tipo_promocion2, fecha_fin,  usuario);
 			//Creamos nueva promocion
 			Promocion p = new Promocion(nombrePromo, fecha_fin, precio2, tipo_promocion2, usuario);
 			pagina = ENTRADA_JSP;
+			boolean promocionExito=true;
 			
-			
+			//Mensajes de error y no guardamos promocion
 			for (Curso c : curDao.buscarTodosLosCursos()) {
 				
 				int precioInicial = c.getPrecio_inicial();
@@ -113,20 +113,9 @@ public class AltaPromocionesServlet extends HttpServlet {
 					if(descuento>0.3*precioInicial){
 						m="Error al crear promocion. El valor de la promocion es mayor que los beneficios que el profesor obtendria en el curso "+c.getDES_titulo();
 						sesion.setAttribute("mensajePromociones", m);
-						break;
+						promocionExito=false;
 					}
 					
-				
-					else {
-						c.setPrecio_final(precioInicial-descuento);
-						c.setFechaFinDescuento(p.getFecha_fin());
-						try {
-							p=promDao.guardarPromocion(p);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-						e.printStackTrace();
-						}
-					}
 				}
 				
 				//Tipo promocion %
@@ -134,39 +123,71 @@ public class AltaPromocionesServlet extends HttpServlet {
 					if((descuento*0.01)*precioInicial>0.7*precioInicial){
 						m="Error al crear la promocion. El valor de la promocion es mayor que los beneficios que el profesor obtendria en el curso "+c.getDES_titulo();
 						sesion.setAttribute("mensajePromociones", m);
-						break;
+						promocionExito=false;
 					}
 					
-					else {
-						int descuentoTotal = (int) (precioInicial-((descuento*0.01)*precioInicial));
-						c.setPrecio_final(descuentoTotal);
-						c.setFechaFinDescuento(p.getFecha_fin());
-						try {
-							p=promDao.guardarPromocion(p);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
+				}
+				
+			}
+			
+			//si no hay problemas con la promocion (es  mayor que el beneficio) se crea y modifican los cursos.
+			if (promocionExito) {
+				sesion.setAttribute("mensajePromociones", "");
+				for (Curso c : curDao.buscarTodosLosCursos()) {
+					
+					int precioInicial = c.getPrecio_inicial();
+					int descuento = p.getDescuento();
+					int tipoDescuento = p.getTipo_promo();
+					
+					
+					if (tipoDescuento==0) {
+							c.setPrecio_final(precioInicial-descuento);
+							c.setFechaFinDescuento(p.getFecha_fin());
+							try {
+								p=promDao.guardarPromocion(p);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+							}
+						
+					}
+					
+					//Tipo promocion %
+					else{
+							int descuentoTotal = (int) (precioInicial-((descuento*0.01)*precioInicial));
+							c.setPrecio_final(descuentoTotal);
+							c.setFechaFinDescuento(p.getFecha_fin());
+							try {
+								p=promDao.guardarPromocion(p);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						
+					}
+					
+					try {
+						c=curDao.modificarCurso(c);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 					
 					
-					
 				}
-				
-				try {
-					c=curDao.modificarCurso(c);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				
 			}
 			
 			
 			Collection<Promocion> promociones = promDao.buscarTodosLosPromociones();
 			sesion.setAttribute("promociones", promociones);
-			sesion.setAttribute("promocion", p);
+			
+			/*ACTUALIZAMOS LAS VARIABLES DE SESION*/
+			/* Recuperar de DB -> CURSOS WHERE TIPO_estado = 0 */
+			Collection<Curso> cursosSinValidar = curDao.recuperarCursosPorDEstado(0);
+			sesion.setAttribute("cursosValidar", cursosSinValidar);
+			/* Recuperar de DB -> CURSOS WHERE TIPO_destacado = 0 */
+			Collection<Curso> cursosDestacados = curDao.recuperarCursosPorDestacado(0);
+			sesion.setAttribute("cursosDestacados", cursosDestacados);
 			
 		}else{
 			
