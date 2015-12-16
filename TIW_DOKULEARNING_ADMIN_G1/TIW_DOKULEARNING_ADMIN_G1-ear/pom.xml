@@ -35,15 +35,15 @@
           <artifactId>TIW_DOKULEARNING_ADMIN_G1-util</artifactId>
            </jarModule> -->
             <!-- 4.5.2. Include EJB Module. -->
-           <ejbModule>
+           <!--<ejbModule>
           <groupId>es.uc3m.tiw.ejb</groupId>
             <artifactId>TIW_DOKULEARNING_ADMIN_G1-ejb</artifactId>
-            </ejbModule> -->
+            </ejbModule>-->
             <!-- 4.5.3. Include Web Application Module. -->
-           <jarModule>
+           <!--<jarModule>
             <groupId>es.uc3m.tiw.model</groupId>
           <artifactId>TIW_DOKULEARNING_ADMIN_G1-model</artifactId>
-           </jarModule> -->
+           </jarModule>-->
             <webModule>
             <groupId>es.uc3m.tiw.web</groupId>
             <artifactId>TIW_DOKULEARNING_ADMIN_G1-web</artifactId>
